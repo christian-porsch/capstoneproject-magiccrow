@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Price {
 
-    private String usd;
-    private String eur;
-    private String tix;
+    private double usd;
+    private double eur;
+    private double tix;
 
 }
