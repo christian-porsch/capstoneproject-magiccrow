@@ -1,8 +1,9 @@
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
     <div>
-      Welcome to MagicCrow
+        <LandingPage />
     </div>
   );
 }
