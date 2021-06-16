@@ -1,18 +1,16 @@
 import {Link} from "react-router-dom";
 import styled from "styled-components/macro";
 import {useState} from "react";
-import axios from "axios";
 
 
-export default function CardSearchResult(){
+
+export default function CardSearchPage({searchForCard}){
 
     const [cardName, setCardName] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.get('/api/cards?cardName=' + cardName)
-            .then(response => response.data)
-            .then ((data) => console.log(data))
+        searchForCard(cardName)
     }
 
     return(
@@ -29,6 +27,7 @@ export default function CardSearchResult(){
                         search
                     </button>
                 </form>
+
                 <button><Link to={'/'}>back to main menu</Link></button>
             </Wrapper>
         )
