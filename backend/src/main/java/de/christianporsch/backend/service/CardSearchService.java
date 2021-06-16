@@ -15,7 +15,7 @@ public class CardSearchService {
             new MagicCard("Black Lotus", "{T}, Sacrifice Black Lotus: Add three mana of any one color.", "https://c1.scryfall.com/file/scryfall-cards/normal/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.jpg?1614638838", new Price(100.00, 50.00, 45.00)));
 
     public List<MagicCard> findMagicCards(String cardName){
-        return magicCardList.stream().filter(card -> card.getName().contains(cardName)).collect(Collectors.toList());
+        return magicCardList.stream().filter(card -> card.getName().toLowerCase().contains(cardName.toLowerCase())).collect(Collectors.toList());
 
     }
 
