@@ -1,6 +1,7 @@
 import LandingPage from "./pages/LandingPage";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CardSearchResult from "./pages/CardSearchResult";
+import CardCollectionPage from "./pages/CardCollectionPage";
 
 function App() {
   return (
@@ -11,6 +12,9 @@ function App() {
           </Route>
           <Route path={'/searchCards'} exact>
                 <CardSearchResult />
+          </Route>
+          <Route path={'/myCollection'} exact>
+                <CardCollectionPage />
           </Route>
         </Switch>
      </Router>
