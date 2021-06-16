@@ -1,33 +1,14 @@
 import styled from 'styled-components/macro'
-import {useState} from "react";
-import axios from "axios";
+import {Link} from "react-router-dom";
+
 
 export default function LandingPage(){
-
-    const [cardName, setCardName] = useState('');
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        axios.get('/api/cards?cardName=' + cardName)
-            .then(response => response.data)
-            .then ((data) => console.log(data))
-    }
 
     return(
         <Wrapper>
             <h2>Welcome to MagicCrow</h2>
-            <form onSubmit = {handleSubmit} >
-                <input
-                    type ='text'
-                    placeholder ='search for a card'
-                    value ={cardName}
-                    onChange = {event => setCardName(event.target.value)}
-                    />
-                <button>
-                    search
-                </button>
-            </form>
-            <button>see my collection</button>
+            <button><Link to={'/searchCards'}>search for magic cards</Link></button>
+            <button><Link>see my collection</Link></button>
         </Wrapper>
     )
 }
