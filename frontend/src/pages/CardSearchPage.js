@@ -10,12 +10,11 @@ export default function CardSearchPage({searchForCard}){
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        searchForCard(cardName)
+        searchForCard(cardName);
     }
 
     return(
             <Wrapper>
-                <h2>Welcome to MagicCrow</h2>
                 <form onSubmit = {handleSubmit} >
                     <input
                         type ='text'
@@ -23,7 +22,7 @@ export default function CardSearchPage({searchForCard}){
                         value ={cardName}
                         onChange = {event => setCardName(event.target.value)}
                     />
-                    <button>
+                    <button disabled={cardName.length === 0}>
                         search
                     </button>
                 </form>

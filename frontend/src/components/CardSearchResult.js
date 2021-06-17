@@ -4,7 +4,7 @@ export default function CardSearchResult({cards}){
     return(
         <CardsAppearance>
             {cards.map((card) => (
-                <img key={card.id} src={card.imageUri}/>
+                <img key={card.id} src={card.imageUri} alt={card.name}/>
             ))}
         </CardsAppearance>
     )

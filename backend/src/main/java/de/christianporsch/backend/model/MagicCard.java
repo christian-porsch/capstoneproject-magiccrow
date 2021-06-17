@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MagicCard {
 
+    private String id;
     private String name;
     private String oracleText;
     private String imageUri;
