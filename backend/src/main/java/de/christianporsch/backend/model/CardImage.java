@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CardImage {
 
-    private String normalSize;
-    private String pngSize;
+    private String normal;
 
 }

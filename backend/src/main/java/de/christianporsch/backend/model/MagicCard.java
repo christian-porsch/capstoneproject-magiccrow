@@ -13,8 +13,8 @@ public class MagicCard {
 
     private String id;
     private String name;
-    private String oracleText;
-    private CardImage imageUri;
+    private String oracle_text;
+    private CardImage image_uris;
     private Price price;
 
 }
