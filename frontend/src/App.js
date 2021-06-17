@@ -4,6 +4,7 @@ import CardSearchPage from "./pages/CardSearchPage";
 import CardCollectionPage from "./pages/CardCollectionPage";
 import useCardSearch from "./hooks/useCardSearch";
 import CardSearchResult from "./components/CardSearchResult";
+import SingleCardPage from "./pages/SingleCardPage";
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
           <Route path={'/myCollection'} exact>
                 <CardCollectionPage />
           </Route>
+            <Route path={'/singleCardPage'} exact>
+                <SingleCardPage />
+            </Route>
         </Switch>
      </Router>
   );

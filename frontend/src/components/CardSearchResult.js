@@ -1,10 +1,11 @@
 import styled from "styled-components/macro";
+import {Link} from "react-router-dom";
 
 export default function CardSearchResult({cards}){
     return(
         <CardsAppearance>
             {cards.map((card) => (
-                <img key={card.id} src={card.image_uris?.normal} alt={card.name}/>
+                <Link to={'singleCardPage'}><img key={card.id} src={card.image_uris?.normal} alt={card.name}/></Link>
             ))}
         </CardsAppearance>
     )
