@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: magiccrow
+server:
+  error:
+    include-message: always
