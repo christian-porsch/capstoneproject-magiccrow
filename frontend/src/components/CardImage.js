@@ -1,5 +1,7 @@
-export default function CardImage({card}){
+export default function CardImage({singleCard}){
+
+    console.log(singleCard);
 return (
-    <img key={card.id} src={card.image_uris?.normal} alt={card.name}/>
+    <img key={singleCard.id} src={singleCard.image_uris?.normal} alt={singleCard.name}/>
 )
 }

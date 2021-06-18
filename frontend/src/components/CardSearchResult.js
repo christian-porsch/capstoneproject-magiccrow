@@ -17,7 +17,7 @@ export default function CardSearchResult({cards}){
     return(
         <CardsAppearance>
             {cards.map((card) => (
-                <Link key={card.id} onClick={() => handleOnClick(card)} to={'singleCardPage'}><CardImage singleCard={card}/></Link>
+                <Link key={card.id} onClick={() => handleOnClick(card)} to={'card/' + card.id}><CardImage singleCard={card}/></Link>
             ))}
         </CardsAppearance>
     )
