@@ -1,33 +1,19 @@
-import {Link} from "react-router-dom";
 import styled from "styled-components/macro";
-import {useState} from "react";
+import useCardSearch from "../hooks/useCardSearch";
+import CardSearchResult from "../components/CardSearchResult";
+import CardSearch from "../components/CardSearch";
 
 
 
-export default function CardSearchPage({searchForCard}){
+export default function CardSearchPage(){
 
-    const [cardName, setCardName] = useState('');
+    const {cards, getSpecificCard} = useCardSearch();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        searchForCard(cardName);
-    }
 
     return(
             <Wrapper>
-                <form onSubmit = {handleSubmit} >
-                    <input
-                        type ='text'
-                        placeholder ='search for a card'
-                        value ={cardName}
-                        onChange = {event => setCardName(event.target.value)}
-                    />
-                    <button disabled={cardName.length === 0}>
-                        search
-                    </button>
-                </form>
-
-                <button><Link to={'/'}>back to main menu</Link></button>
+                <CardSearch searchForCard={getSpecificCard}/>
+                <CardSearchResult cards={cards}/>
             </Wrapper>
         )
 }

@@ -2,13 +2,10 @@ import LandingPage from "./pages/LandingPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CardSearchPage from "./pages/CardSearchPage";
 import CardCollectionPage from "./pages/CardCollectionPage";
-import useCardSearch from "./hooks/useCardSearch";
-import CardSearchResult from "./components/CardSearchResult";
 import SingleCardPage from "./pages/SingleCardPage";
 
 function App() {
 
-    const {cards, getSpecificCard} = useCardSearch();
 
   return (
       <Router>
@@ -17,8 +14,7 @@ function App() {
                 <LandingPage />
           </Route>
           <Route path={'/searchCards'} exact>
-                <CardSearchPage searchForCard={getSpecificCard}/>
-                <CardSearchResult cards={cards}/>
+                <CardSearchPage />
           </Route>
           <Route path={'/myCollection'} exact>
                 <CardCollectionPage />
