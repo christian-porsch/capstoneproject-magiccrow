@@ -19,7 +19,7 @@ function App() {
           <Route path={'/myCollection'} exact>
                 <CardCollectionPage />
           </Route>
-            <Route path={'/card/:id'} exact>
+            <Route path={'/:name/:id'} exact>
                 <SingleCardPage />
             </Route>
         </Switch>
