@@ -1,11 +1,23 @@
 import styled from "styled-components/macro";
 import {Link} from "react-router-dom";
+import {useState} from "react";
+import CardImage from "./CardImage";
 
 export default function CardSearchResult({cards}){
+
+    const [selectedCard, setSelectedCard] = useState ()
+
+    const handleOnClick = (card) => {
+        setSelectedCard(card);
+        console.log(card);
+    }
+
+
+
     return(
         <CardsAppearance>
             {cards.map((card) => (
-                <Link to={'singleCardPage'}><img key={card.id} src={card.image_uris?.normal} alt={card.name}/></Link>
+                <Link key={card.id} onClick={() => handleOnClick(card)} to={'singleCardPage'}><CardImage singleCard={card}/></Link>
             ))}
         </CardsAppearance>
     )
