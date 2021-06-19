@@ -7,8 +7,6 @@ export default function LandingPage(){
     return(
         <Wrapper>
             <h2>Welcome to MagicCrow</h2>
-            <button><Link to={'/searchCards'}>search for magic cards</Link></button>
-            <button><Link to={'/myCollection'}>see my collection</Link></button>
         </Wrapper>
     )
 }

@@ -26,8 +26,6 @@ export default function CardSearch({searchForCard}){
                     search
                 </button>
             </form>
-
-            <button><Link to={'/'}>back to main menu</Link></button>
         </Wrapper>
     )
 }
