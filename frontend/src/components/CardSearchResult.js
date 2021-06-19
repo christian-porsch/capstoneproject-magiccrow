@@ -19,10 +19,4 @@ const CardsAppearance = styled.section`
         flex-flow: row wrap;
         justify-content: center;
          
-        img {
-        justify-content: space-evenly;
-        margin: 5px;
-        width: 150px;
-        height: auto;
-        }
 `
