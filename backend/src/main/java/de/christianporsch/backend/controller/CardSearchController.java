@@ -2,12 +2,12 @@ package de.christianporsch.backend.controller;
 
 import de.christianporsch.backend.model.MagicCard;
 import de.christianporsch.backend.service.CardSearchService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -24,6 +24,15 @@ public class CardSearchController {
     @GetMapping
     List<MagicCard> findMagicCards(@RequestParam String cardName){
         return cardSearchService.findMagicCards(cardName);
+    }
+
+    @GetMapping("{id}")
+    public MagicCard findMagicCardById (@PathVariable String id){
+        Optional<MagicCard> response = cardSearchService.findMagicCardById(id);
+        if (response.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Magic card with id " + id + " not found");
+        }
+        return response.get();
     }
 
 }
