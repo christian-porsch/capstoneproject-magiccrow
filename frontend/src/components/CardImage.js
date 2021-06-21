@@ -14,6 +14,6 @@ export default function CardImage({singleCard}){
         margin: 5px;
         width: 150px;
         height: auto;
-        border-radius: 5%;
+        border-radius: 7%;
     
     `

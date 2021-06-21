@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro'
-import {Link} from "react-router-dom";
 
 
 export default function LandingPage(){
@@ -14,5 +13,9 @@ export default function LandingPage(){
 const Wrapper = styled.div`
   
   text-align: center;
+  
+  h2 {
+        color: #0275d8;
+     }
   
 `

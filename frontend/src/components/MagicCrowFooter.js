@@ -5,7 +5,7 @@ import {BoxSeam, House, Search} from "react-bootstrap-icons";
 
 export default function MagicCrowFooter(){
     return (
-            <Navbar fixed='bottom' bg='dark' variant='dark' className='justify-content-around'>
+            <Navbar fixed='bottom' bg='dark' className='justify-content-around'>
                     <NavItem>
                         <NavLink href='/'><House size='30px' /></NavLink>
                     </NavItem>

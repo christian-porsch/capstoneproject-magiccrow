@@ -1,7 +1,6 @@
 import {useState} from "react";
 import {Button, Form, FormControl, InputGroup} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styled from "styled-components/macro";
 
 
 export default function CardSearch({searchForCard}){
