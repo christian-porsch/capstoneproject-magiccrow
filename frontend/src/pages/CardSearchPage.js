@@ -4,7 +4,6 @@ import CardSearchResult from "../components/CardSearchResult";
 import CardSearch from "../components/CardSearch";
 
 
-
 export default function CardSearchPage(){
 
     const {cards, getSpecificCard} = useCardSearch();

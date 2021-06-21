@@ -4,12 +4,11 @@ export default function SingleCardPage(){
 
     const { name, id } = useParams();
 
-
     return(
-        <div>
-        <h2>{name}</h2>
-        <h3>{id}</h3>
-        </div>
+        <section>
+        <p>{name}</p>
+        <p>{id}</p>
+        </section>
     )
 
 }
