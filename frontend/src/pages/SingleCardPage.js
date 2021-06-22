@@ -1,21 +1,28 @@
-import { useParams } from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import useCardId from "../hooks/useCardId";
 import styled from "styled-components/macro";
 import {Button} from "react-bootstrap";
+import useCardPrice from "../hooks/useCardPrice";
 
-export default function SingleCardPage(){
+export default function SingleCardPage() {
 
-    const { id } = useParams();
+    const {id} = useParams();
 
-    const { card } = useCardId(id);
+    const {card} = useCardId(id);
+    const {cardPrice} = useCardPrice(id);
 
-    return(
+    console.log(cardPrice);
+
+    return (
         <div>
             <h3>{card.name}</h3>
-                <SingleCardAppearance>
+            <SingleCardAppearance>
 
-                <SingleCardImage src={card.image_uris?.normal} />
-            <p>{card.oracle_text}</p>
+                <SingleCardImage src={card.image_uris?.normal}/>
+                <p>{card.oracle_text}</p>
+                <p>usd: {cardPrice.prices?.usd}</p>
+                <p>eur: {cardPrice.prices?.eur}</p>
+                <p>tix: {cardPrice.prices?.tix}</p>
             </SingleCardAppearance>
             <Button variant='primary'>Add</Button>
         </div>
@@ -23,7 +30,7 @@ export default function SingleCardPage(){
 
 }
 
-const SingleCardImage= styled.img`
+const SingleCardImage = styled.img`
     
         margin: 5px;
         width: 150px;
@@ -32,7 +39,7 @@ const SingleCardImage= styled.img`
     
     `
 
-const SingleCardAppearance= styled.section`
-        display: flex;
+const SingleCardAppearance = styled.section`
+        display: grid;
         
     `
