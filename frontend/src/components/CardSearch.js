@@ -1,7 +1,6 @@
-import {Link} from "react-router-dom";
-import styled from "styled-components/macro";
 import {useState} from "react";
-
+import {Button, Form, FormControl, InputGroup} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default function CardSearch({searchForCard}){
@@ -14,26 +13,23 @@ export default function CardSearch({searchForCard}){
     }
 
     return(
-        <Wrapper>
-            <form onSubmit = {handleSubmit} >
-                <input
+
+            <Form onSubmit = {handleSubmit} className='form-control-sm'>
+                <InputGroup className='rounded'>
+                <FormControl
                     type ='text'
                     placeholder ='search for a card'
                     value ={cardName}
                     onChange = {event => setCardName(event.target.value)}
                 />
-                <button disabled={cardName.length === 0}>
-                    search
-                </button>
-            </form>
+                <InputGroup.Append>
+                    <Button variant='primary' disabled={cardName.length === 0}>
+                        search
+                    </Button>
+                </InputGroup.Append>
+            </InputGroup>
 
-            <button><Link to={'/'}>back to main menu</Link></button>
-        </Wrapper>
+            </Form>
+
     )
 }
-
-const Wrapper = styled.div`
-  
-  text-align: center;
-  
-`

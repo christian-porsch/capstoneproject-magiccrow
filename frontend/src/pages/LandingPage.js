@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro'
-import {Link} from "react-router-dom";
 
 
 export default function LandingPage(){
@@ -7,8 +6,6 @@ export default function LandingPage(){
     return(
         <Wrapper>
             <h2>Welcome to MagicCrow</h2>
-            <button><Link to={'/searchCards'}>search for magic cards</Link></button>
-            <button><Link to={'/myCollection'}>see my collection</Link></button>
         </Wrapper>
     )
 }
@@ -16,5 +13,9 @@ export default function LandingPage(){
 const Wrapper = styled.div`
   
   text-align: center;
+  
+  h2 {
+        color: #0275d8;
+     }
   
 `
