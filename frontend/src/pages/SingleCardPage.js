@@ -3,6 +3,7 @@ import useCardId from "../hooks/useCardId";
 import styled from "styled-components/macro";
 import {Button} from "react-bootstrap";
 import useCardPrice from "../hooks/useCardPrice";
+import useCardAddToPile from "../hooks/useCardAddToPile";
 
 export default function SingleCardPage() {
 
@@ -10,8 +11,11 @@ export default function SingleCardPage() {
 
     const {card} = useCardId(id);
     const {cardPrice} = useCardPrice(id);
+    const {addCardToPile} = useCardAddToPile();
 
-    console.log(cardPrice);
+    const handleOnClick = () => {
+        addCardToPile(id);
+    }
 
     return (
         <div>
@@ -24,7 +28,7 @@ export default function SingleCardPage() {
                 <p>eur: {cardPrice.prices?.eur}</p>
                 <p>tix: {cardPrice.prices?.tix}</p>
             </SingleCardAppearance>
-            <Button variant='primary'>Add</Button>
+            <Button variant='primary' onClick={handleOnClick}>Add</Button>
         </div>
     )
 

@@ -22,15 +22,16 @@ public class CardPileController {
     }
 
     @GetMapping("{id}")
-    public List<MagicCard> findPileOfCardsByUser(@PathVariable String id){
+    public List<MagicCard> findPileOfCardsByUser(@PathVariable String id) {
         List<MagicCard> response = cardPileService.findPileOfCardsByUser(id);
         return response;
     }
 
     @PostMapping
-    public MagicCard addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd){
+    public MagicCard addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
         return cardPileService.addMagicCardToPile(magicCardToAdd);
-
     }
+
+
 
 }
