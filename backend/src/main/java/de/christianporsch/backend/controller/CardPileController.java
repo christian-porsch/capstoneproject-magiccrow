@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -27,7 +29,10 @@ public class CardPileController {
     @GetMapping("{id}")
     public List<MagicCardInPile> findPileOfCardsByUser(@PathVariable String id) {
         List<MagicCardInPile> response = cardPileService.findPileOfCardsByUser(id);
-        return response;
+        return response
+                .stream()
+                .sorted(Comparator.comparing(MagicCardInPile::getName))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/userPile/{id}")

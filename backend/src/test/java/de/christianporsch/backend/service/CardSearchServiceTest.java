@@ -26,7 +26,7 @@ class CardSearchServiceTest {
 
         // Given
 
-        List<MagicCard> magicCard = List.of(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), new Price(10, 20, 15)));
+        List<MagicCard> magicCard = List.of(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"),"some set", new Price(10, 20, 15)));
         when(magicCardRepository.filterCardsByCardName("Tarmogoyf")).thenReturn(magicCard);
 
         // When
@@ -35,7 +35,7 @@ class CardSearchServiceTest {
 
         // Then
 
-        assertThat(magicCards, containsInAnyOrder(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), new Price(10, 20, 15))));
+        assertThat(magicCards, containsInAnyOrder(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"),"some set", new Price(10, 20, 15))));
 
     }
 

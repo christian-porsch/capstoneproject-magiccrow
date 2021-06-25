@@ -55,6 +55,7 @@ public class CardPileService {
                         .name(magicCard.get().getName())
                         .oracle_text(magicCard.get().getOracle_text())
                         .image_uris(magicCard.get().getImage_uris())
+                        .set_name(magicCard.get().getSet_name())
                         .build();
                 user.getPileOfCards().add(newMagicCardInPile);
                 magicCardInPileRepository.save(newMagicCardInPile);

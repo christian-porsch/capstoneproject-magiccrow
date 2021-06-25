@@ -19,6 +19,7 @@ public class MagicCardInPile {
     private String name;
     private String oracle_text;
     private CardImage image_uris;
+    private String set_name;
     private int amount;
     private boolean priceAlert;
 

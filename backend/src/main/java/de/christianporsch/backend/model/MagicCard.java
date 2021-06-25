@@ -17,6 +17,7 @@ public class MagicCard {
     private String name;
     private String oracle_text;
     private CardImage image_uris;
+    private String set_name;
     private Price prices;
 
 }

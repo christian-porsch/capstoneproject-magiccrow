@@ -1,5 +1,6 @@
 import useCardsInPile from "../hooks/useCardsInPile";
-import styled from "styled-components/macro";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Table} from "react-bootstrap";
 
 export default function CardCollectionPage() {
 
@@ -8,20 +9,36 @@ export default function CardCollectionPage() {
     return (
         <div>
             <h2>welcome to your collection</h2>
-            {cardsInPile && <section>
+            {cardsInPile && <Table striped bordered hover>
+                <thead className='text-center'>
+                    <tr>
+                        <th>
+                            cardname
+                        </th>
+                        <th>
+                            set
+                        </th>
+                        <th>
+                            amount
+                        </th>
+                    </tr>
+                </thead>
                 {cardsInPile.map(cardInPile => (
-                    <ImageAppearance key={cardInPile.id}src={cardInPile.image_uris?.normal} alt={cardInPile.name} />))}
-            </section>}
+                <tbody>
+                <tr>
+                    <td>
+                        {cardInPile.name}
+                    </td>
+                    <td>
+                        {cardInPile.set_name}
+                    </td>
+                    <td className='text-center'>
+                        {cardInPile.amount}
+                    </td>
+                </tr>
+                </tbody>))}
+            </Table>}
         </div>
     )
 }
 
-const ImageAppearance = styled.img`
-    
-        justify-content: space-evenly;
-        margin: 5px;
-        width: 150px;
-        height: auto;
-        border-radius: 7%;
-    
-    `
