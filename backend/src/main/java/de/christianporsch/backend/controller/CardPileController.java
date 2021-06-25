@@ -1,13 +1,16 @@
 package de.christianporsch.backend.controller;
 
-import de.christianporsch.backend.model.MagicCard;
+import de.christianporsch.backend.model.MagicCardInPile;
 import de.christianporsch.backend.model.dto.MagicCardDto;
 import de.christianporsch.backend.service.CardPileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -22,14 +25,23 @@ public class CardPileController {
     }
 
     @GetMapping("{id}")
-    public List<MagicCard> findPileOfCardsByUser(@PathVariable String id) {
-        List<MagicCard> response = cardPileService.findPileOfCardsByUser(id);
+    public List<MagicCardInPile> findPileOfCardsByUser(@PathVariable String id) {
+        List<MagicCardInPile> response = cardPileService.findPileOfCardsByUser(id);
         return response;
     }
 
+    @GetMapping("/userPile/{id}")
+    public MagicCardInPile findMagicCardInPileById (@PathVariable String id){
+        Optional<MagicCardInPile> response = cardPileService.findMagicCardInPileById(id);
+        if (response.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Magic card with id " + id + " not found");
+        }
+        return response.get();
+    }
+
     @PostMapping
-    public MagicCard addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
-        return cardPileService.addMagicCardToPile(magicCardToAdd);
+    public void addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
+        cardPileService.addMagicCardToPile(magicCardToAdd);
     }
 
 
