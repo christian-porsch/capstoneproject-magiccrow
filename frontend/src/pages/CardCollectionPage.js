@@ -1,6 +1,7 @@
 import useCardsInPile from "../hooks/useCardsInPile";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Table} from "react-bootstrap";
+import {Link} from "react-bootstrap-icons";
 
 export default function CardCollectionPage() {
 
@@ -23,14 +24,15 @@ export default function CardCollectionPage() {
                         </th>
                     </tr>
                 </thead>
+
                 {cardsInPile.map(cardInPile => (
                 <tbody>
                 <tr>
                     <td>
-                        {cardInPile.name}
+                        <a href={'/myCollection/' + cardInPile.id} className='badge badge-light'>{cardInPile.name}</a>
                     </td>
                     <td>
-                        {cardInPile.set_name}
+                        <a href={'/myCollection/' + cardInPile.id} className='badge badge-light'>{cardInPile.set_name}</a>
                     </td>
                     <td className='text-center'>
                         {cardInPile.amount}
