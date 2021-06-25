@@ -8,7 +8,7 @@ export default function useCardSearch(){
     const getSpecificCard = (cardName) => {
         return axios
             .get('/api/cards?cardName=' + cardName)
-            .then(response => response.data)
+            .then((response) => response.data)
             .then (setCards)
             .catch((error) => console.log(error))
 
@@ -17,6 +17,7 @@ export default function useCardSearch(){
     return {
         cards,
         getSpecificCard,
+
     }
 
 }

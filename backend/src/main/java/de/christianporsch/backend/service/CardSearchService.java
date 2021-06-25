@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CardSearchService {
@@ -20,6 +21,10 @@ public class CardSearchService {
     public List<MagicCard> findMagicCards(String cardName){
         return magicCardRepository.filterCardsByCardName(cardName);
 
+    }
+
+    public Optional<MagicCard> findMagicCardById (String id){
+        return magicCardRepository.findMagicCardById(id);
     }
 
 }

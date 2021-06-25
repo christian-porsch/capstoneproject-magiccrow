@@ -2,12 +2,12 @@ import styled from "styled-components/macro";
 import {Link} from "react-router-dom";
 import CardImage from "./CardImage";
 
-export default function CardSearchResult({cards}){
+export default function CardSearchResult({cards}) {
 
-    return(
+    return (
         <CardsAppearance>
             {cards.map((card) => (
-                <Link key={card.id} to={card.name + '/' + card.id}><CardImage singleCard={card}/></Link>
+                <Link key={card.id} to={'/' + card.id}><CardImage singleCard={card}/></Link>
             ))}
         </CardsAppearance>
     )
