@@ -1,7 +1,6 @@
 import {useParams} from 'react-router-dom'
 import useCardId from "../hooks/useCardId";
 import styled from "styled-components/macro";
-import {Button} from "react-bootstrap";
 import useCardPrice from "../hooks/useCardPrice";
 import useCardAddToPile from "../hooks/useCardAddToPile";
 
@@ -19,7 +18,6 @@ export default function SingleCardPage() {
 
     return (
         <div className='container'>
-            <h3 className='fon'>{card.name}</h3>
             <div className='row'>
                 <div className='col'>
                     <SingleCardImage src={card.image_uris?.normal}/>
@@ -35,11 +33,22 @@ export default function SingleCardPage() {
                         {cardPrice.prices?.tix} tix
                     </div>
 
-                    <Button className='col btn btn-primary' onClick={handleOnClick}>Add to collection</Button>
+
 
                 </div>
             </div>
-            <p>{card.oracle_text}</p>
+            <div className='card border-light'>
+                <div className='card-header'>
+                    <button className='btn btn-outline-info align-items-center' onClick={handleOnClick}>Add to collection</button>
+                </div>
+                <div className='card-body'>
+                    <h3 className='card-title text-monospace'>
+                        {card.name}
+                    </h3>
+                    <h6 className='text-monospace'>{card.set_name}</h6>
+                </div>
+                <p className='card-text'>{card.oracle_text}</p>
+            </div>
         </div>
 
 )
@@ -48,8 +57,7 @@ export default function SingleCardPage() {
 
 const SingleCardImage = styled.img`
     
-        margin: 5px;
-        width: 150px;
+        width: 200px;
         height: auto;
         border-radius: 7%;
     
