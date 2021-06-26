@@ -18,19 +18,31 @@ export default function SingleCardPage() {
     }
 
     return (
-        <div>
-            <h3>{card.name}</h3>
-            <SingleCardAppearance>
+        <div className='container'>
+            <h3 className='fon'>{card.name}</h3>
+            <div className='row'>
+                <div className='col'>
+                    <SingleCardImage src={card.image_uris?.normal}/>
+                </div>
+                <div className='col'>
+                    <div className='col badge badge-info'>
+                        {cardPrice.prices?.usd} $
+                    </div>
+                    <div className='col badge badge-info'>
+                        {cardPrice.prices?.eur} €
+                    </div>
+                    <div className='col badge badge-info'>
+                        {cardPrice.prices?.tix} tix
+                    </div>
 
-                <SingleCardImage src={card.image_uris?.normal}/>
-                <p>{card.oracle_text}</p>
-                <p>usd: {cardPrice.prices?.usd}</p>
-                <p>eur: {cardPrice.prices?.eur}</p>
-                <p>tix: {cardPrice.prices?.tix}</p>
-            </SingleCardAppearance>
-            <Button variant='primary' onClick={handleOnClick}>Add</Button>
+                    <Button className='col btn btn-primary' onClick={handleOnClick}>Add to collection</Button>
+
+                </div>
+            </div>
+            <p>{card.oracle_text}</p>
         </div>
-    )
+
+)
 
 }
 
@@ -43,7 +55,3 @@ const SingleCardImage = styled.img`
     
     `
 
-const SingleCardAppearance = styled.section`
-        display: grid;
-        
-    `

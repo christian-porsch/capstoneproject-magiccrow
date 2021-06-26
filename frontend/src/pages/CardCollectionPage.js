@@ -1,7 +1,7 @@
 import useCardsInPile from "../hooks/useCardsInPile";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Table} from "react-bootstrap";
-import {Link} from "react-bootstrap-icons";
+
 
 export default function CardCollectionPage() {
 
