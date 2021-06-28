@@ -35,8 +35,8 @@ class CardSearchControllerTest {
 
         // Given
 
-        magicCardRepository.save(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), new Price(10, 20, 15)));
-        magicCardRepository.save(new MagicCard("2","Jace, the Mindsculptor", "some oracle text about jace", new CardImage("jaceHighresImg"), new Price(1, 2, 5)));
+        magicCardRepository.save(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15)));
+        magicCardRepository.save(new MagicCard("2","Jace, the Mindsculptor", "some oracle text about jace", new CardImage("jaceHighresImg"), "some set", new Price(1, 2, 5)));
 
         // When
 
@@ -45,7 +45,7 @@ class CardSearchControllerTest {
         // Then
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        assertThat(response.getBody(),arrayContainingInAnyOrder(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), new Price(10, 20, 15))));
+        assertThat(response.getBody(),arrayContainingInAnyOrder(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15))));
     }
 
 }

@@ -27,4 +27,5 @@ public class CardSearchService {
         return magicCardRepository.findMagicCardById(id);
     }
 
+
 }
