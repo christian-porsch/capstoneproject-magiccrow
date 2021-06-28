@@ -32,14 +32,11 @@ export default function SingleCardPage() {
                     <div className='col badge badge-info'>
                         {cardPrice.prices?.tix} tix
                     </div>
-
-
-
                 </div>
             </div>
             <div className='card border-light'>
                 <div className='card-header'>
-                    <button className='btn btn-outline-info align-items-center' onClick={handleOnClick}>Add to collection</button>
+                    <button className='btn btn-success align-items-center' onClick={handleOnClick}>Add to collection</button>
                 </div>
                 <div className='card-body'>
                     <h3 className='card-title text-monospace'>

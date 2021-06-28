@@ -35,7 +35,7 @@ public class CardPileController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/userPile/{id}")
+    @GetMapping("/specificCardInPile/{id}")
     public MagicCardInPile findMagicCardInPileById (@PathVariable String id){
         Optional<MagicCardInPile> response = cardPileService.findMagicCardInPileById(id);
         if (response.isEmpty()) {
