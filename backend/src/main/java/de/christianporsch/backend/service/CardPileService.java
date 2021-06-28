@@ -38,7 +38,7 @@ public class CardPileService {
         return magicCardInPileRepository.findMagicCardInPileById(id);
     }
 
-    public void addMagicCardToPile(MagicCardDto magicCardToAdd) {
+    public MagicCardInPile addMagicCardToPile(MagicCardDto magicCardToAdd) {
         Optional<MagicCard> magicCard = cardSearchService.findMagicCardById(magicCardToAdd.getId());
 
         if (magicCard.isPresent()) {
@@ -47,6 +47,8 @@ public class CardPileService {
             if(magicCardInPile.isPresent()){
                 magicCardInPile.get().setAmount(magicCardInPile.get().getAmount()+1);
                 magicCardInPileRepository.save(magicCardInPile.get());
+                userRepository.save(user);
+                return magicCardInPile.get();
             }
             else {
                 MagicCardInPile newMagicCardInPile = MagicCardInPile.builder()
@@ -59,8 +61,9 @@ public class CardPileService {
                         .build();
                 user.getPileOfCards().add(newMagicCardInPile);
                 magicCardInPileRepository.save(newMagicCardInPile);
+                userRepository.save(user);
+                return newMagicCardInPile;
             }
-            userRepository.save(user);
         }
          else {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error");}
     }

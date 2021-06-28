@@ -9,7 +9,7 @@ export default function useCardSearch(){
         return axios
             .get('/api/cards?cardName=' + cardName)
             .then((response) => response.data)
-            .then (setCards)
+            .then(setCards)
             .catch((error) => console.log(error))
 
     }

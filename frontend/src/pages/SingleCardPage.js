@@ -2,7 +2,8 @@ import {useParams} from 'react-router-dom'
 import useCardId from "../hooks/useCardId";
 import styled from "styled-components/macro";
 import useCardPrice from "../hooks/useCardPrice";
-import useCardAddToPile from "../hooks/useCardAddToPile";
+import useCardInPile from "../hooks/useCardInPile";
+import {BoxSeam} from "react-bootstrap-icons";
 
 export default function SingleCardPage() {
 
@@ -10,7 +11,7 @@ export default function SingleCardPage() {
 
     const {card} = useCardId(id);
     const {cardPrice} = useCardPrice(id);
-    const {addCardToPile} = useCardAddToPile();
+    const {addCardToPile, cardInPile} = useCardInPile(id);
 
     const handleOnClick = () => {
         addCardToPile(id);
@@ -32,11 +33,15 @@ export default function SingleCardPage() {
                     <div className='col badge badge-info'>
                         {cardPrice.prices?.tix} tix
                     </div>
+                    <div className='col badge badge-info'>
+                        <BoxSeam size='25px'/>: {cardInPile.amount}
+                    </div>
                 </div>
             </div>
             <div className='card border-light'>
                 <div className='card-header'>
-                    <button className='btn btn-success align-items-center' onClick={handleOnClick}>Add to collection</button>
+                    <button className='btn btn-success align-items-center' onClick={handleOnClick}>Add to collection
+                    </button>
                 </div>
                 <div className='card-body'>
                     <h3 className='card-title text-monospace'>
@@ -48,7 +53,7 @@ export default function SingleCardPage() {
             </div>
         </div>
 
-)
+    )
 
 }
 

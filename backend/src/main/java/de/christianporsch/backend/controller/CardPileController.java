@@ -45,8 +45,8 @@ public class CardPileController {
     }
 
     @PostMapping
-    public void addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
-        cardPileService.addMagicCardToPile(magicCardToAdd);
+    public MagicCardInPile addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
+        return cardPileService.addMagicCardToPile(magicCardToAdd);
     }
 
 

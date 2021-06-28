@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export default function useCardInPileId(id) {
+export default function useCardInPile(id) {
 
     const [cardInPile, setCardInPile] = useState({})
 
@@ -10,9 +10,21 @@ export default function useCardInPileId(id) {
             .get('/api/cardsInPile/specificCardInPile/' + id)
             .then(response => response.data)
             .then(setCardInPile)
+            .catch(error => console.log(error))
     }, [id])
 
+    const addCardToPile = (id) => {
+        axios
+            .post('/api/cardsInPile/', {id})
+            .then(response => response.data)
+            .then(setCardInPile)
+            .catch(error => console.log(error))
+    }
+
+
+
     return {
+        addCardToPile,
         cardInPile
     }
 }

@@ -4,17 +4,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from "styled-components/macro";
 import {BoxSeam, DashCircleFill, PlusCircleFill} from "react-bootstrap-icons";
 import useCardPrice from "../hooks/useCardPrice";
-import useCardAddToPile from "../hooks/useCardAddToPile";
-import useCardInPileId from "../hooks/useCardInPileId";
+import useCardInPile from "../hooks/useCardInPile";
 
 
 export default function SingleCardInCollectionPage() {
 
     const {id} = useParams();
 
-    const {cardInPile} = useCardInPileId(id);
+    const {cardInPile, addCardToPile} = useCardInPile(id);
     const {cardPrice} = useCardPrice(id);
-    const {addCardToPile} = useCardAddToPile();
+
 
     const handleOnClickAdd = () => {
         addCardToPile(id);
