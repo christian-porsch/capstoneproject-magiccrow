@@ -34,7 +34,7 @@ public class CardPileService {
         return userRepository.findUserById(id).getPileOfCards();
     }
 
-    public Optional<MagicCardInPile> findMagicCardInPileById (String id){
+    public Optional<MagicCardInPile> findMagicCardInPileById(String id) {
         return magicCardInPileRepository.findMagicCardInPileById(id);
     }
 
@@ -42,15 +42,18 @@ public class CardPileService {
         Optional<MagicCard> magicCard = cardSearchService.findMagicCardById(magicCardToAdd.getId());
 
         if (magicCard.isPresent()) {
+
             User user = userRepository.findUserById("60d2f120c76f8707f38e9a99");
+
             Optional<MagicCardInPile> magicCardInPile = user.getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
-            if(magicCardInPile.isPresent()){
-                magicCardInPile.get().setAmount(magicCardInPile.get().getAmount()+1);
+
+            if (magicCardInPile.isPresent()) {
+                magicCardInPile.get().setAmount(magicCardInPile.get().getAmount() + 1);
                 magicCardInPileRepository.save(magicCardInPile.get());
                 userRepository.save(user);
+
                 return magicCardInPile.get();
-            }
-            else {
+            } else {
                 MagicCardInPile newMagicCardInPile = MagicCardInPile.builder()
                         .id(magicCard.get().getId())
                         .amount(1)
@@ -62,11 +65,35 @@ public class CardPileService {
                 user.getPileOfCards().add(newMagicCardInPile);
                 magicCardInPileRepository.save(newMagicCardInPile);
                 userRepository.save(user);
+
                 return newMagicCardInPile;
             }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error");
         }
-         else {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error");}
     }
 
+    public MagicCardInPile decreaseMagicCardInPileAmount(String id){
 
+        Optional<MagicCardInPile> magicCard = findMagicCardInPileById(id);
+
+        if(magicCard.isPresent()){
+            User user = userRepository.findUserById("60d2f120c76f8707f38e9a99");
+
+            Optional<MagicCardInPile> magicCardInPile = user.getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
+
+            if(magicCardInPile.isPresent()){
+                magicCardInPile.get().setAmount(magicCardInPile.get().getAmount() - 1);
+                magicCardInPileRepository.save(magicCardInPile.get());
+                userRepository.save(user);
+
+                return magicCardInPile.get();
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public void deleteMagicCardInPileById(String id){
+        magicCardInPileRepository.deleteById(id);
+    }
 }

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 
-export default function useCardSearch(){
+export default function useCardSearch() {
 
     const [cards, setCards] = useState([]);
 

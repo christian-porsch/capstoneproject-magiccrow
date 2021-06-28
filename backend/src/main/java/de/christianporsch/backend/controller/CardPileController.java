@@ -46,9 +46,22 @@ public class CardPileController {
 
     @PostMapping
     public MagicCardInPile addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
-        return cardPileService.addMagicCardToPile(magicCardToAdd);
+        try {
+            return cardPileService.addMagicCardToPile(magicCardToAdd);
+        } catch (IllegalArgumentException error){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, error.getMessage());
+        }
     }
 
+    @PutMapping("/updateCardInPile/{id}")
+    public MagicCardInPile decreaseMagicCardInPileAmount(@PathVariable String id){
+        return cardPileService.decreaseMagicCardInPileAmount(id);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteMagicCardInPileById(@PathVariable String id){
+        cardPileService.deleteMagicCardInPileById(id);
+    }
 
 
 }
