@@ -12,8 +12,7 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class CardPileServiceTest {
@@ -30,7 +29,7 @@ class CardPileServiceTest {
 
     @Test
     @DisplayName("Method should find magic cards in pile by Id from Db")
-    void findMagicCardInPileById() {
+    public void findMagicCardInPileById() {
 
         // Given
 
@@ -72,7 +71,17 @@ class CardPileServiceTest {
     }
 
     @Test
-    void deleteMagicCardInPileById() {
+    @DisplayName("Method should delete magic cards from pile from db")
+    public void deleteMagicCardInPileById() {
+
+        // When
+
+        cardPileService.deleteMagicCardInPileById("12");
+
+        // Then
+
+        verify(magicCardInPileRepository).deleteById("12");
+
     }
 
 }
