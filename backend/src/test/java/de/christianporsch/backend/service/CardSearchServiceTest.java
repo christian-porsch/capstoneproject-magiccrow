@@ -8,10 +8,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,11 +24,11 @@ class CardSearchServiceTest {
 
     @Test
     @DisplayName("Method should return magic cards from Db")
-    public void findMagicCardsTest(){
+    public void findMagicCardsTest() {
 
         // Given
 
-        List<MagicCard> magicCard = List.of(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"),"some set", new Price(10, 20, 15)));
+        List<MagicCard> magicCard = List.of(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15)));
         when(magicCardRepository.filterCardsByCardName("Tarmogoyf")).thenReturn(magicCard);
 
         // When
@@ -35,8 +37,33 @@ class CardSearchServiceTest {
 
         // Then
 
-        assertThat(magicCards, containsInAnyOrder(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"),"some set", new Price(10, 20, 15))));
+        assertThat(magicCards, containsInAnyOrder(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15))));
 
+    }
+
+    @Test
+    @DisplayName("Method should return magic cards from Db by Id")
+    public void findMagicCardByIdTest() {
+
+        // Given
+
+        MagicCard magicCard = new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15));
+        when(magicCardRepository.findMagicCardById("1")).thenReturn(Optional.of(magicCard));
+
+        // When
+
+        Optional<MagicCard> magicCardToFind = cardSearchService.findMagicCardById("1");
+
+        // Then
+
+        assertThat(magicCardToFind.get(), is(new MagicCard().builder()
+                .id("1")
+                .name("Tarmogoyf")
+                .oracle_text("some oracle text about tarmo")
+                .image_uris(new CardImage("tarmoHighresImg"))
+                .set_name("some set")
+                .prices(new Price(10, 20, 15))
+                .build()));
     }
 
 }
