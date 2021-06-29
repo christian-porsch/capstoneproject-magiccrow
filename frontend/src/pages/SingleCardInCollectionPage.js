@@ -11,13 +11,18 @@ export default function SingleCardInCollectionPage() {
 
     const {id} = useParams();
 
-    const {cardInPile, addCardToPile} = useCardInPile(id);
+    const {addCardToPile, decreaseCardFromPile, cardInPile} = useCardInPile(id);
     const {cardPrice} = useCardPrice(id);
 
 
     const handleOnClickAdd = () => {
         addCardToPile(id);
     }
+
+    const handleOnClickDecrease = () => {
+        decreaseCardFromPile(id)
+    }
+
 
     return (
         <div className='container'>
@@ -36,7 +41,7 @@ export default function SingleCardInCollectionPage() {
                         {cardPrice.prices?.tix} tix
                     </div>
                     <div className='justify-content-around'>
-                        <DashCircleFill color='#dc3545' size='25px'/>
+                        <DashCircleFill color='#dc3545' size='25px' onClick={handleOnClickDecrease}/>
                         <PlusCircleFill color='#28a745' size='25px' onClick={handleOnClickAdd}/>
                     </div>
                 </div>
