@@ -22,12 +22,11 @@ public class CardPileService {
     private final MagicCardInPileRepository magicCardInPileRepository;
     private final CardSearchService cardSearchService;
 
-
     @Autowired
-    public CardPileService(UserRepository userRepository, MagicCardInPileRepository magicCardInPileRepository, CardSearchService cardSearchService) {
+    public CardPileService(CardSearchService cardSearchService, UserRepository userRepository, MagicCardInPileRepository magicCardInPileRepository) {
+        this.cardSearchService = cardSearchService;
         this.userRepository = userRepository;
         this.magicCardInPileRepository = magicCardInPileRepository;
-        this.cardSearchService = cardSearchService;
     }
 
     public List<MagicCardInPile> findPileOfCardsByUser(String id) {

@@ -29,9 +29,13 @@ export default function SingleCardInCollectionPage() {
             <div className='row'>
                 <div className='col'>
                     <SingleCardImage src={cardInPile.image_uris?.normal}/>
+                    <div className='d-flex justify-content-between'>
+                        <DashCircleFill color='#dc3545' size='25px' onClick={handleOnClickDecrease}/>
+                        <PlusCircleFill color='#28a745' size='25px' onClick={handleOnClickAdd}/>
+                    </div>
                 </div>
                 <div className='col'>
-                    <div className='col badge badge-info'>
+                    <div className='w-100 badge badge-info'>
                         {cardPrice.prices?.usd} $
                     </div>
                     <div className='col badge badge-info'>
@@ -39,10 +43,6 @@ export default function SingleCardInCollectionPage() {
                     </div>
                     <div className='col badge badge-info'>
                         {cardPrice.prices?.tix} tix
-                    </div>
-                    <div className='justify-content-around'>
-                        <DashCircleFill color='#dc3545' size='25px' onClick={handleOnClickDecrease}/>
-                        <PlusCircleFill color='#28a745' size='25px' onClick={handleOnClickAdd}/>
                     </div>
                 </div>
             </div>
