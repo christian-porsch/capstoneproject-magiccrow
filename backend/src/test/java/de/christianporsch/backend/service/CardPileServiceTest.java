@@ -1,12 +1,14 @@
 package de.christianporsch.backend.service;
 
 import de.christianporsch.backend.model.*;
+import de.christianporsch.backend.model.dto.MagicCardDto;
 import de.christianporsch.backend.repository.MagicCardInPileRepository;
 import de.christianporsch.backend.repository.MagicCardRepository;
 import de.christianporsch.backend.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,8 +84,34 @@ class CardPileServiceTest {
     }
 
     @Test
-    @DisplayName("Method should add whole magic card to pile of user. If magic card is already in collection method should increase amount by 1")
+    @DisplayName("Method should add whole magic card to pile of user")
     public void addMagicCardToPile() {
+
+        // Given
+
+        User user = new User("17", "christian", new ArrayList<>(List.of(
+                new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                        new CardImage("tarmoHighresImg"), "some set", 1, false))));
+
+        MagicCardDto newMagicCardToAdd = new MagicCardDto("2");
+
+        when(userRepository.findUserById("60d2f120c76f8707f38e9a99")).thenReturn(user);
+        when(magicCardRepository.findMagicCardById("2")).thenReturn(Optional.of(new MagicCard("2", "Mox", "some oracle text about mox",
+                new CardImage("moxHighresImg"), "some set", new Price(10, 20, 15))));
+
+        // When
+
+        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(newMagicCardToAdd);
+
+        // Then
+
+        assertThat(magicCardInPileToAdd, is(new MagicCardInPile("2", "Mox", "some oracle text about mox",
+                new CardImage("moxHighresImg"), "some set", 1, false)));
+    }
+
+    @Test
+    @DisplayName("If magic card is already in collection method should increase amount by 1")
+    public void addMagicCardToPileIncreaseAmount() {
 
         // Given
 
