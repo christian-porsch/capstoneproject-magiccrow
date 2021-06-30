@@ -1,13 +1,13 @@
 package de.christianporsch.backend.service;
 
-import de.christianporsch.backend.model.CardImage;
-import de.christianporsch.backend.model.MagicCardInPile;
+import de.christianporsch.backend.model.*;
 import de.christianporsch.backend.repository.MagicCardInPileRepository;
 import de.christianporsch.backend.repository.MagicCardRepository;
 import de.christianporsch.backend.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +24,26 @@ class CardPileServiceTest {
     private final CardPileService cardPileService = new CardPileService(cardSearchService, userRepository, magicCardInPileRepository);
 
     @Test
-    void findPileOfCardsByUser() {
+    @DisplayName("Method should return pile of cards from a user found by user id")
+    public void findPileOfCardsByUser() {
+
+        // Given
+
+        User user = new User("17", "christian", List.of(
+                new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                        new CardImage("tarmoHighresImg"), "some set", 1, false)));
+        when(userRepository.findUserById("17")).thenReturn(user);
+
+        // When
+
+        List<MagicCardInPile> pileOfUserToFind = cardPileService.findPileOfCardsByUser("17");
+
+        // Then
+
+        assertThat(pileOfUserToFind, is(List.of(
+                new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                        new CardImage("tarmoHighresImg"), "some set", 1, false))));
+
     }
 
     @Test
@@ -33,7 +52,7 @@ class CardPileServiceTest {
 
         // Given
 
-        MagicCardInPile magicCardInPile = new MagicCardInPile().builder()
+        MagicCardInPile magicCardInPile = MagicCardInPile.builder()
                 .id("1")
                 .name("Tarmogoyf")
                 .oracle_text("some oracle text about tarmo")
@@ -50,7 +69,7 @@ class CardPileServiceTest {
 
         // Then
 
-        assertThat(magicCardInPileToFind.get(), is(new MagicCardInPile().builder()
+        assertThat(magicCardInPileToFind.get(), is(MagicCardInPile.builder()
                 .id("1")
                 .name("Tarmogoyf")
                 .oracle_text("some oracle text about tarmo")
@@ -63,11 +82,38 @@ class CardPileServiceTest {
     }
 
     @Test
-    void addMagicCardToPile() {
+    @DisplayName("Method should add whole magic card to pile of user. If magic card is already in collection method should increase amount by 1")
+    public void addMagicCardToPile() {
+
+        // Given
+
+        // When
+
+        // Then
     }
 
     @Test
-    void decreaseMagicCardInPileAmount() {
+    @DisplayName("Method should decrease the amount of a magic card if it is present in users pile")
+    public void decreaseMagicCardInPileAmount() {
+
+        // Given
+
+        User user = new User("17", "christian", List.of(
+                new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                        new CardImage("tarmoHighresImg"), "some set", 10, false)));
+        when(userRepository.findUserById("60d2f120c76f8707f38e9a99")).thenReturn(user);
+        when(magicCardInPileRepository.findMagicCardInPileById("1")).thenReturn(Optional.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                new CardImage("tarmoHighresImg"), "some set", 10, false)));
+
+        // When
+
+        MagicCardInPile magicCardInPileToDecrease = cardPileService.decreaseMagicCardInPileAmount("1");
+
+        // Then
+
+        assertThat(magicCardInPileToDecrease, is(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                new CardImage("tarmoHighresImg"), "some set", 9, false)));
+
     }
 
     @Test
