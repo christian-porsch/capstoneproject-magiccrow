@@ -115,9 +115,25 @@ class CardPileServiceTest {
 
         // Given
 
+        User user = new User("17", "christian", new ArrayList<>(List.of(
+                new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                        new CardImage("tarmoHighresImg"), "some set", 1, false))));
+
+        MagicCardDto newMagicCardToAdd = new MagicCardDto("1");
+
+        when(userRepository.findUserById("60d2f120c76f8707f38e9a99")).thenReturn(user);
+        when(magicCardRepository.findMagicCardById("1")).thenReturn(Optional.of(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
+                new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17))));
+
         // When
 
+        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(newMagicCardToAdd);
+
         // Then
+
+        assertThat(magicCardInPileToAdd, is(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                new CardImage("tarmoHighresImg"), "some set", 2, false)));
+
     }
 
     @Test
