@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -30,7 +32,11 @@ public class CardPileService {
     }
 
     public List<MagicCardInPile> findPileOfCardsByUser(String id) {
-        return userRepository.findUserById(id).getPileOfCards();
+        List<MagicCardInPile> response = userRepository.findUserById(id).getPileOfCards();
+        return response
+                .stream()
+                .sorted(Comparator.comparing(MagicCardInPile::getName))
+                .collect(Collectors.toList());
     }
 
     public Optional<MagicCardInPile> findMagicCardInPileById(String id) {
@@ -68,20 +74,20 @@ public class CardPileService {
                 return newMagicCardInPile;
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The magic card you are looking for does not exist");
         }
     }
 
-    public MagicCardInPile decreaseMagicCardInPileAmount(String id){
+    public MagicCardInPile decreaseMagicCardInPileAmount(String id) {
 
         Optional<MagicCardInPile> magicCard = findMagicCardInPileById(id);
 
-        if(magicCard.isPresent()){
+        if (magicCard.isPresent()) {
             User user = userRepository.findUserById("60d2f120c76f8707f38e9a99");
 
             Optional<MagicCardInPile> magicCardInPile = user.getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
 
-            if(magicCardInPile.isPresent()){
+            if (magicCardInPile.isPresent()) {
                 magicCardInPile.get().setAmount(magicCardInPile.get().getAmount() - 1);
                 magicCardInPileRepository.save(magicCardInPile.get());
                 userRepository.save(user);
@@ -92,7 +98,7 @@ public class CardPileService {
         throw new IllegalArgumentException();
     }
 
-    public void deleteMagicCardInPileById(String id){
+    public void deleteMagicCardInPileById(String id) {
         magicCardInPileRepository.deleteById(id);
     }
 }

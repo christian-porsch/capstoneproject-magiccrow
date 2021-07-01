@@ -2,7 +2,7 @@ import {useParams, useHistory} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import styled from "styled-components/macro";
-import {BoxSeam, DashCircleFill, PlusCircleFill} from "react-bootstrap-icons";
+import {BoxSeam} from "react-bootstrap-icons";
 import useCardPrice from "../hooks/useCardPrice";
 import useCardInPile from "../hooks/useCardInPile";
 

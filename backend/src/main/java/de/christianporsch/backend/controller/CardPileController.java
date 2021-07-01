@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -28,15 +26,11 @@ public class CardPileController {
 
     @GetMapping("{id}")
     public List<MagicCardInPile> findPileOfCardsByUser(@PathVariable String id) {
-        List<MagicCardInPile> response = cardPileService.findPileOfCardsByUser(id);
-        return response
-                .stream()
-                .sorted(Comparator.comparing(MagicCardInPile::getName))
-                .collect(Collectors.toList());
+        return cardPileService.findPileOfCardsByUser(id);
     }
 
     @GetMapping("/specificCardInPile/{id}")
-    public MagicCardInPile findMagicCardInPileById (@PathVariable String id){
+    public MagicCardInPile findMagicCardInPileById(@PathVariable String id) {
         Optional<MagicCardInPile> response = cardPileService.findMagicCardInPileById(id);
         if (response.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Magic card with id " + id + " not found");
@@ -48,18 +42,18 @@ public class CardPileController {
     public MagicCardInPile addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
         try {
             return cardPileService.addMagicCardToPile(magicCardToAdd);
-        } catch (IllegalArgumentException error){
+        } catch (IllegalArgumentException error) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, error.getMessage());
         }
     }
 
     @PutMapping("/updateCardInPile/{id}")
-    public MagicCardInPile decreaseMagicCardInPileAmount(@PathVariable String id){
+    public MagicCardInPile decreaseMagicCardInPileAmount(@PathVariable String id) {
         return cardPileService.decreaseMagicCardInPileAmount(id);
     }
 
     @DeleteMapping("{id}")
-    public void deleteMagicCardInPileById(@PathVariable String id){
+    public void deleteMagicCardInPileById(@PathVariable String id) {
         cardPileService.deleteMagicCardInPileById(id);
     }
 

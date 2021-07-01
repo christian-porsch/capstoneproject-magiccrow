@@ -12,7 +12,9 @@ export default function MagicCrowHeader(){
 
 const Logo = styled.img`
     
-    display: block;
+    display: flex;
+    align-items: center:
+    justify-content: center;
     margin: auto;
     width: 50%;
     height: auto;

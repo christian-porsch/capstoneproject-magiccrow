@@ -26,7 +26,7 @@ export default function CardCollectionPage() {
                 </thead>
 
                 {cardsInPile.map(cardInPile => (
-                    <tbody>
+                    <tbody key={cardInPile.id}>
                     <tr>
                         <td>
                             <a href={'/myCollection/' + cardInPile.id}
