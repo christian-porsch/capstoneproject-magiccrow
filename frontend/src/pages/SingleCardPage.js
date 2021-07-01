@@ -24,24 +24,24 @@ export default function SingleCardPage() {
                     <SingleCardImage src={card.image_uris?.normal}/>
                 </div>
                 <div className='col'>
-                    <div className='col badge badge-info'>
+                    <div className='w-100 badge badge-info'>
                         {cardPrice.prices?.usd} $
                     </div>
-                    <div className='col badge badge-info'>
+                    <div className='w-100 badge badge-info'>
                         {cardPrice.prices?.eur} €
                     </div>
-                    <div className='col badge badge-info'>
+                    <div className='w-100 badge badge-info'>
                         {cardPrice.prices?.tix} tix
                     </div>
-                    <div className='col badge badge-info'>
+                    <button className='btn btn-success w-100 p-2' onClick={handleOnClick}>Add to collection</button>
+                    <div className='col d-flex justify-content-center p-2'>
                         <BoxSeam size='25px'/>: {cardInPile.amount}
                     </div>
                 </div>
             </div>
             <div className='card border-light'>
                 <div className='card-header'>
-                    <button className='btn btn-success align-items-center' onClick={handleOnClick}>Add to collection
-                    </button>
+
                 </div>
                 <div className='card-body'>
                     <h3 className='card-title text-monospace'>

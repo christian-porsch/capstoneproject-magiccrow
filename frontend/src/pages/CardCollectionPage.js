@@ -9,7 +9,7 @@ export default function CardCollectionPage() {
 
     return (
         <div>
-            <h2>welcome to your collection</h2>
+            <h2 className='text-center text-uppercase text-monospace'>your collection</h2>
             {cardsInPile && <Table striped bordered hover>
                 <thead className='text-center'>
                 <tr>

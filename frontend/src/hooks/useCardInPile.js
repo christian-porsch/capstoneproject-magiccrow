@@ -29,10 +29,19 @@ export default function useCardInPile(id) {
             .catch(error => console.log(error))
     }
 
+    const deleteCardFromPile = (id) => {
+        axios
+            .delete('/api/cardsInPile/' + id)
+            .then(response => response.data)
+            .then(setCardInPile)
+            .catch(error => console.log(error))
+    }
+
 
     return {
         addCardToPile,
         decreaseCardFromPile,
+        deleteCardFromPile,
         cardInPile
     }
 }

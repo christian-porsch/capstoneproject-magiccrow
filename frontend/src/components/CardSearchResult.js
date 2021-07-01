@@ -18,6 +18,6 @@ const CardsAppearance = styled.section`
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
-        padding: 50px 0px;
+        padding: 20px 0px 60px 0px;
          
 `
