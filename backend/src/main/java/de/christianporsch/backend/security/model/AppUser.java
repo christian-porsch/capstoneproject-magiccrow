@@ -1,6 +1,8 @@
-package de.christianporsch.backend.model;
+package de.christianporsch.backend.security.model;
 
+import de.christianporsch.backend.model.MagicCardInPile;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -12,12 +14,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Document(collection = "user")
-public class User {
+public class AppUser {
 
     @Id
-    private String id;
     private String username;
+    private String password;
     @DBRef
     private List<MagicCardInPile> pileOfCards;
 }

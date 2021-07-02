@@ -4,7 +4,8 @@ import de.christianporsch.backend.model.*;
 import de.christianporsch.backend.model.dto.MagicCardDto;
 import de.christianporsch.backend.repository.MagicCardInPileRepository;
 import de.christianporsch.backend.repository.MagicCardRepository;
-import de.christianporsch.backend.repository.UserRepository;
+import de.christianporsch.backend.security.repository.AppUserRepository;
+import de.christianporsch.backend.security.model.AppUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class CardPileControllerTest {
     private MagicCardRepository magicCardRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository appUserRepository;
 
     @Autowired
     private MagicCardInPileRepository magicCardInPileRepository;
@@ -46,7 +47,7 @@ class CardPileControllerTest {
     public void clearRepositories(){
         magicCardRepository.deleteAll();
         magicCardInPileRepository.deleteAll();
-        userRepository.deleteAll();
+        appUserRepository.deleteAll();
     }
 
 
@@ -57,7 +58,7 @@ class CardPileControllerTest {
 
         // Given
 
-        userRepository.save(new User("17", "christian", List.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+        appUserRepository.save(new AppUser("17", "christian", List.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 1, false))));
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 1, false));
@@ -101,7 +102,7 @@ class CardPileControllerTest {
 
         // Given
 
-        userRepository.save(new User("60d2f120c76f8707f38e9a99", "christian", new ArrayList<>()));
+        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", new ArrayList<>()));
         magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17)));
         MagicCardDto magicCardToAdd = new MagicCardDto("1");
@@ -129,7 +130,7 @@ class CardPileControllerTest {
 
         // Given
 
-        userRepository.save(new User("60d2f120c76f8707f38e9a99", "christian", List.of(
+        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false))));
         magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
@@ -158,7 +159,7 @@ class CardPileControllerTest {
 
         // Given
 
-        userRepository.save(new User("60d2f120c76f8707f38e9a99", "christian", List.of(
+        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false))));
         magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
@@ -184,7 +185,7 @@ class CardPileControllerTest {
 
         // Given
 
-        userRepository.save(new User("60d2f120c76f8707f38e9a99", "christian", List.of(
+        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false))));
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",

@@ -2,10 +2,10 @@ package de.christianporsch.backend.service;
 
 import de.christianporsch.backend.model.MagicCard;
 import de.christianporsch.backend.model.MagicCardInPile;
-import de.christianporsch.backend.model.User;
+import de.christianporsch.backend.security.model.AppUser;
 import de.christianporsch.backend.model.dto.MagicCardDto;
 import de.christianporsch.backend.repository.MagicCardInPileRepository;
-import de.christianporsch.backend.repository.UserRepository;
+import de.christianporsch.backend.security.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,19 +20,19 @@ import java.util.stream.Collectors;
 @Service
 public class CardPileService {
 
-    private final UserRepository userRepository;
+    private final AppUserRepository appUserRepository;
     private final MagicCardInPileRepository magicCardInPileRepository;
     private final CardSearchService cardSearchService;
 
     @Autowired
-    public CardPileService(CardSearchService cardSearchService, UserRepository userRepository, MagicCardInPileRepository magicCardInPileRepository) {
+    public CardPileService(CardSearchService cardSearchService, AppUserRepository appUserRepository, MagicCardInPileRepository magicCardInPileRepository) {
         this.cardSearchService = cardSearchService;
-        this.userRepository = userRepository;
+        this.appUserRepository = appUserRepository;
         this.magicCardInPileRepository = magicCardInPileRepository;
     }
 
     public List<MagicCardInPile> findPileOfCardsByUser(String id) {
-        List<MagicCardInPile> response = userRepository.findUserById(id).getPileOfCards();
+        List<MagicCardInPile> response = appUserRepository.findById(id).get().getPileOfCards();
         return response
                 .stream()
                 .sorted(Comparator.comparing(MagicCardInPile::getName))
@@ -48,14 +48,14 @@ public class CardPileService {
 
         if (magicCard.isPresent()) {
 
-            User user = userRepository.findUserById("60d2f120c76f8707f38e9a99");
+            Optional<AppUser> appUser = appUserRepository.findById("psychomantis");
 
-            Optional<MagicCardInPile> magicCardInPile = user.getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
+            Optional<MagicCardInPile> magicCardInPile = appUser.get().getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
 
             if (magicCardInPile.isPresent()) {
                 magicCardInPile.get().setAmount(magicCardInPile.get().getAmount() + 1);
                 magicCardInPileRepository.save(magicCardInPile.get());
-                userRepository.save(user);
+                appUserRepository.save(appUser.get());
 
                 return magicCardInPile.get();
             } else {
@@ -67,9 +67,9 @@ public class CardPileService {
                         .image_uris(magicCard.get().getImage_uris())
                         .set_name(magicCard.get().getSet_name())
                         .build();
-                user.getPileOfCards().add(newMagicCardInPile);
+                appUser.get().getPileOfCards().add(newMagicCardInPile);
                 magicCardInPileRepository.save(newMagicCardInPile);
-                userRepository.save(user);
+                appUserRepository.save(appUser.get());
 
                 return newMagicCardInPile;
             }
@@ -83,14 +83,14 @@ public class CardPileService {
         Optional<MagicCardInPile> magicCard = findMagicCardInPileById(id);
 
         if (magicCard.isPresent()) {
-            User user = userRepository.findUserById("60d2f120c76f8707f38e9a99");
+            Optional<AppUser> appUser = appUserRepository.findById("psychomantis");
 
-            Optional<MagicCardInPile> magicCardInPile = user.getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
+            Optional<MagicCardInPile> magicCardInPile = appUser.get().getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
 
             if (magicCardInPile.isPresent()) {
                 magicCardInPile.get().setAmount(magicCardInPile.get().getAmount() - 1);
                 magicCardInPileRepository.save(magicCardInPile.get());
-                userRepository.save(user);
+                appUserRepository.save(appUser.get());
 
                 return magicCardInPile.get();
             }
