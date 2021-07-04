@@ -88,7 +88,7 @@ public class CardPileService {
         Optional<MagicCardInPile> magicCard = findMagicCardInPileById(id);
 
         if (magicCard.isPresent()) {
-            Optional<AppUser> appUser = appUserRepository.findById("psychomantis");
+            Optional<AppUser> appUser = appUserRepository.findById(id);
 
             Optional<MagicCardInPile> magicCardInPile = appUser.get().getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
 
