@@ -44,51 +44,52 @@ public class CardPileService {
         return magicCardInPileRepository.findMagicCardInPileById(id);
     }
 
-    public MagicCardInPile addMagicCardToPile(MagicCardDto magicCardToAdd) {
+    public MagicCardInPile addMagicCardToPile(String username, MagicCardDto magicCardToAdd) {
+
         Optional<MagicCard> magicCard = cardSearchService.findMagicCardById(magicCardToAdd.getId());
 
-        if (magicCard.isPresent()) {
-
-            Optional<AppUser> appUser = appUserRepository.findById("psychomantis");
-
-            if(appUser.get().getPileOfCards() == null){
-                appUser.get().setPileOfCards(new ArrayList<>());
-            }
-
-            Optional<MagicCardInPile> magicCardInPile = appUser.get().getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
-
-            if (magicCardInPile.isPresent()) {
-                magicCardInPile.get().setAmount(magicCardInPile.get().getAmount() + 1);
-                magicCardInPileRepository.save(magicCardInPile.get());
-                appUserRepository.save(appUser.get());
-
-                return magicCardInPile.get();
-            } else {
-                MagicCardInPile newMagicCardInPile = MagicCardInPile.builder()
-                        .id(magicCard.get().getId())
-                        .amount(1)
-                        .name(magicCard.get().getName())
-                        .oracle_text(magicCard.get().getOracle_text())
-                        .image_uris(magicCard.get().getImage_uris())
-                        .set_name(magicCard.get().getSet_name())
-                        .build();
-                appUser.get().getPileOfCards().add(newMagicCardInPile);
-                magicCardInPileRepository.save(newMagicCardInPile);
-                appUserRepository.save(appUser.get());
-
-                return newMagicCardInPile;
-            }
-        } else {
+        if (magicCard.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The magic card you are looking for does not exist");
         }
+
+        Optional<AppUser> appUser = appUserRepository.findById(username);
+
+        if (appUser.get().getPileOfCards() == null) {
+            appUser.get().setPileOfCards(new ArrayList<>());
+        }
+
+        Optional<MagicCardInPile> magicCardInPile = appUser.get().getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
+
+        if (magicCardInPile.isPresent()) {
+            magicCardInPile.get().setAmount(magicCardInPile.get().getAmount() + 1);
+            magicCardInPileRepository.save(magicCardInPile.get());
+            appUserRepository.save(appUser.get());
+
+            return magicCardInPile.get();
+        } else {
+            MagicCardInPile newMagicCardInPile = MagicCardInPile.builder()
+                    .id(magicCard.get().getId())
+                    .amount(1)
+                    .name(magicCard.get().getName())
+                    .oracle_text(magicCard.get().getOracle_text())
+                    .image_uris(magicCard.get().getImage_uris())
+                    .set_name(magicCard.get().getSet_name())
+                    .build();
+            appUser.get().getPileOfCards().add(newMagicCardInPile);
+            magicCardInPileRepository.save(newMagicCardInPile);
+            appUserRepository.save(appUser.get());
+
+            return newMagicCardInPile;
+        }
+
     }
 
-    public MagicCardInPile decreaseMagicCardInPileAmount(String id) {
+    public MagicCardInPile decreaseMagicCardInPileAmount(String username, String id) {
 
         Optional<MagicCardInPile> magicCard = findMagicCardInPileById(id);
 
         if (magicCard.isPresent()) {
-            Optional<AppUser> appUser = appUserRepository.findById(id);
+            Optional<AppUser> appUser = appUserRepository.findById(username);
 
             Optional<MagicCardInPile> magicCardInPile = appUser.get().getPileOfCards().stream().filter((card) -> magicCard.get().getId().equals(card.getId())).findFirst();
 

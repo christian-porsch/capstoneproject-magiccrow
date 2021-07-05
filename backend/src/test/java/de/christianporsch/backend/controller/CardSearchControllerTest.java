@@ -1,9 +1,12 @@
 package de.christianporsch.backend.controller;
 
+import de.christianporsch.backend.controller.dto.LoginDataDto;
 import de.christianporsch.backend.model.CardImage;
 import de.christianporsch.backend.model.MagicCard;
 import de.christianporsch.backend.model.Price;
 import de.christianporsch.backend.repository.MagicCardRepository;
+import de.christianporsch.backend.security.model.AppUser;
+import de.christianporsch.backend.security.repository.AppUserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +14,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = "jwt.secret=testSecret")
 class CardSearchControllerTest {
 
     @LocalServerPort
@@ -28,6 +33,12 @@ class CardSearchControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Test
     @DisplayName("Method should return magic cards from Db")
@@ -40,7 +51,11 @@ class CardSearchControllerTest {
 
         // When
 
-        ResponseEntity<MagicCard[]> response = restTemplate.getForEntity("http://localhost:" + port + "/api/cards?cardName=Tarmogoyf", MagicCard[].class);
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+        ResponseEntity<MagicCard[]> response = restTemplate.exchange("http://localhost:" + port + "/api/cards?cardName=Tarmogoyf",
+                HttpMethod.GET,
+                        new HttpEntity<>(headers),
+                        MagicCard[].class);
 
         // Then
 
@@ -58,7 +73,11 @@ class CardSearchControllerTest {
 
         // When
 
-        ResponseEntity<MagicCard> response = restTemplate.getForEntity("http://localhost:" + port + "/api/cards/1", MagicCard.class);
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+        ResponseEntity<MagicCard> response = restTemplate.exchange("http://localhost:" + port + "/api/cards/1",
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                MagicCard.class);
 
         // Then
 
@@ -71,5 +90,14 @@ class CardSearchControllerTest {
                 .set_name("some set")
                 .prices(new Price(10, 20, 15))
                 .build()));
+    }
+
+    private HttpHeaders getHttpHeaderWithAuthToken() {
+        appUserRepository.save(AppUser.builder().username("test_username").password(encoder.encode("test_password")).build());
+        LoginDataDto loginData = new LoginDataDto("test_username", "test_password");
+        ResponseEntity<String> tokenResponse = restTemplate.postForEntity("http://localhost:" + port + "/auth/login", loginData, String.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(tokenResponse.getBody());
+        return headers;
     }
 }

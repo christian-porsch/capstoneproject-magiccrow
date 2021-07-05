@@ -32,14 +32,14 @@ class CardPileServiceTest {
 
         // Given
 
-        AppUser appUser = new AppUser("17", "christian", List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 1, false)));
         when(appUserRepository.findById("17")).thenReturn(Optional.of(appUser));
 
         // When
 
-        List<MagicCardInPile> pileOfUserToFind = cardPileService.findPileOfCardsByUser("17");
+        List<MagicCardInPile> pileOfUserToFind = cardPileService.findPileOfCardsByUser(appUser.getUsername());
 
         // Then
 
@@ -90,19 +90,19 @@ class CardPileServiceTest {
 
         // Given
 
-        AppUser appUser = new AppUser("17", "christian", new ArrayList<>(List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", new ArrayList<>(List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 1, false))));
 
         MagicCardDto newMagicCardToAdd = new MagicCardDto("2");
 
-        when(appUserRepository.findById("60d2f120c76f8707f38e9a99")).thenReturn(Optional.of(appUser));
+        when(appUserRepository.findById(appUser.getUsername())).thenReturn(Optional.of(appUser));
         when(magicCardRepository.findMagicCardById("2")).thenReturn(Optional.of(new MagicCard("2", "Mox", "some oracle text about mox",
                 new CardImage("moxHighresImg"), "some set", new Price(10, 20, 15))));
 
         // When
 
-        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(newMagicCardToAdd);
+        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(appUser.getUsername(), newMagicCardToAdd);
 
         // Then
 
@@ -116,19 +116,19 @@ class CardPileServiceTest {
 
         // Given
 
-        AppUser appUser = new AppUser("17", "christian", new ArrayList<>(List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", new ArrayList<>(List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 1, false))));
 
         MagicCardDto newMagicCardToAdd = new MagicCardDto("1");
 
-        when(appUserRepository.findById("60d2f120c76f8707f38e9a99")).thenReturn(Optional.of(appUser));
+        when(appUserRepository.findById(appUser.getUsername())).thenReturn(Optional.of(appUser));
         when(magicCardRepository.findMagicCardById("1")).thenReturn(Optional.of(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17))));
 
         // When
 
-        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(newMagicCardToAdd);
+        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(appUser.getUsername(), newMagicCardToAdd);
 
         // Then
 
@@ -143,16 +143,16 @@ class CardPileServiceTest {
 
         // Given
 
-        AppUser appUser = new AppUser("17", "christian", List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false)));
-        when(appUserRepository.findById("60d2f120c76f8707f38e9a99")).thenReturn(Optional.of(appUser));
+        when(appUserRepository.findById(appUser.getUsername())).thenReturn(Optional.of(appUser));
         when(magicCardInPileRepository.findMagicCardInPileById("1")).thenReturn(Optional.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 10, false)));
 
         // When
 
-        MagicCardInPile magicCardInPileToDecrease = cardPileService.decreaseMagicCardInPileAmount("1");
+        MagicCardInPile magicCardInPileToDecrease = cardPileService.decreaseMagicCardInPileAmount(appUser.getUsername(), "1");
 
         // Then
 

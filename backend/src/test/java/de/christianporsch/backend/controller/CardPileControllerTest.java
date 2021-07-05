@@ -58,7 +58,7 @@ class CardPileControllerTest {
 
         // Given
 
-        appUserRepository.save(new AppUser("17", "christian", List.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+        appUserRepository.save(new AppUser("christian", "supersafe", List.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 1, false))));
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 1, false));

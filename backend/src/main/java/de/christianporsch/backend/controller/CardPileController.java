@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,17 +39,23 @@ public class CardPileController {
     }
 
     @PostMapping
-    public MagicCardInPile addMagicCardToPile(@RequestBody MagicCardDto magicCardToAdd) {
+    public MagicCardInPile addMagicCardToPile(Principal principal, @RequestBody MagicCardDto magicCardToAdd) {
+
+        String username = principal.getName();
+
         try {
-            return cardPileService.addMagicCardToPile(magicCardToAdd);
+            return cardPileService.addMagicCardToPile(username, magicCardToAdd);
         } catch (IllegalArgumentException error) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, error.getMessage());
         }
     }
 
     @PutMapping("/updateCardInPile/{id}")
-    public MagicCardInPile decreaseMagicCardInPileAmount(@PathVariable String id) {
-        return cardPileService.decreaseMagicCardInPileAmount(id);
+    public MagicCardInPile decreaseMagicCardInPileAmount(Principal principal, @PathVariable String id) {
+
+        String username = principal.getName();
+
+        return cardPileService.decreaseMagicCardInPileAmount(username, id);
     }
 
     @DeleteMapping("{id}")
