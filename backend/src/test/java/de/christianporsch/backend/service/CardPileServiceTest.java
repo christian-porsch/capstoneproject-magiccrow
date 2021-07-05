@@ -35,7 +35,7 @@ class CardPileServiceTest {
         AppUser appUser = new AppUser("christian", "supersafe", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 1, false)));
-        when(appUserRepository.findById("17")).thenReturn(Optional.of(appUser));
+        when(appUserRepository.findById("christian")).thenReturn(Optional.of(appUser));
 
         // When
 

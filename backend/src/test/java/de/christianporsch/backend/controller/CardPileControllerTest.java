@@ -1,5 +1,6 @@
 package de.christianporsch.backend.controller;
 
+import de.christianporsch.backend.controller.dto.LoginDataDto;
 import de.christianporsch.backend.model.*;
 import de.christianporsch.backend.model.dto.MagicCardDto;
 import de.christianporsch.backend.repository.MagicCardInPileRepository;
@@ -11,10 +12,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = "jwt.secret=testSecret")
 class CardPileControllerTest {
 
     @LocalServerPort
@@ -43,6 +47,9 @@ class CardPileControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     @BeforeEach
     public void clearRepositories(){
         magicCardRepository.deleteAll();
@@ -50,22 +57,24 @@ class CardPileControllerTest {
         appUserRepository.deleteAll();
     }
 
-
-
     @Test
     @DisplayName("Method should return pile of cards from a user found by user id")
     public void findPileOfCardsByUser() {
 
         // Given
 
-        appUserRepository.save(new AppUser("christian", "supersafe", List.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
-                new CardImage("tarmoHighresImg"), "some set", 1, false))));
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 1, false));
+        appUserRepository.save(new AppUser("test_username", "test_password", List.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
+                new CardImage("tarmoHighresImg"), "some set", 1, false))));
 
         // When
 
-        ResponseEntity<MagicCardInPile[]> response = restTemplate.getForEntity("http://localhost:" + port + "/api/cardsInPile/17", MagicCardInPile[].class);
+        ResponseEntity<MagicCardInPile[]> response = restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile/test_username",
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                MagicCardInPile[].class);
 
         // Then
 
@@ -80,12 +89,16 @@ class CardPileControllerTest {
 
         // Given
 
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 1, false));
 
         // When
 
-        ResponseEntity<MagicCardInPile> response = restTemplate.getForEntity("http://localhost:" + port + "/api/cardsInPile/specificCardInPile/1", MagicCardInPile.class);
+        ResponseEntity<MagicCardInPile> response = restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile/specificCardInPile/1",
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                MagicCardInPile.class);
 
         // Then
 
@@ -102,7 +115,8 @@ class CardPileControllerTest {
 
         // Given
 
-        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", new ArrayList<>()));
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+        appUserRepository.save(new AppUser("test_user", "test_password", new ArrayList<>()));
         magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17)));
         MagicCardDto magicCardToAdd = new MagicCardDto("1");
@@ -110,7 +124,10 @@ class CardPileControllerTest {
 
         // When
 
-        ResponseEntity<MagicCardInPile> response = restTemplate.postForEntity("http://localhost:" + port + "/api/cardsInPile", magicCardToAdd, MagicCardInPile.class);
+        ResponseEntity<MagicCardInPile> response = restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile",
+                HttpMethod.POST,
+                new HttpEntity<>(magicCardToAdd, headers),
+                 MagicCardInPile.class);
 
         // Then
 
@@ -130,20 +147,25 @@ class CardPileControllerTest {
 
         // Given
 
-        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", List.of(
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+        appUserRepository.save(new AppUser("test_username", "test_password", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false))));
-        magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
-                new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17)));
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 10, false));
+        magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
+                new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17)));
+
 
         MagicCardDto magicCardToAdd = new MagicCardDto("1");
 
 
         // When
 
-        ResponseEntity<MagicCardInPile> response = restTemplate.postForEntity("http://localhost:" + port + "/api/cardsInPile", magicCardToAdd, MagicCardInPile.class);
+        ResponseEntity<MagicCardInPile> response = restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile",
+                HttpMethod.POST,
+                new HttpEntity<>(magicCardToAdd, headers),
+                 MagicCardInPile.class);
 
         // Then
 
@@ -158,18 +180,22 @@ class CardPileControllerTest {
     public void decreaseMagicCardInPileAmount() {
 
         // Given
-
-        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", List.of(
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+        appUserRepository.save(new AppUser("test_username", "test_password", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false))));
-        magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
-                new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17)));
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 10, false));
+        magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
+                new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17)));
+
 
         // When
 
-        restTemplate.put("http://localhost:" + port + "/api/cardsInPile/updateCardInPile/1", MagicCardInPile.class);
+        restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile/updateCardInPile/1",
+                HttpMethod.PUT,
+                new HttpEntity<>(headers),
+                MagicCardInPile.class);
 
         // Then
 
@@ -185,7 +211,8 @@ class CardPileControllerTest {
 
         // Given
 
-        appUserRepository.save(new AppUser("60d2f120c76f8707f38e9a99", "christian", List.of(
+        HttpHeaders headers = getHttpHeaderWithAuthToken();
+        appUserRepository.save(new AppUser("test_user", "test_password", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false))));
         magicCardInPileRepository.save(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
@@ -193,12 +220,24 @@ class CardPileControllerTest {
 
         // When
 
-        restTemplate.delete("http://localhost:" + port + "/api/cardsInPile/1");
+        restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile/1",
+                HttpMethod.DELETE,
+                new HttpEntity<>(headers),
+                MagicCardInPile.class);
 
         // Then
 
         Optional<MagicCardInPile> pileOfCards = magicCardInPileRepository.findMagicCardInPileById("1");
         assertTrue(pileOfCards.isEmpty());
 
+    }
+
+    private HttpHeaders getHttpHeaderWithAuthToken() {
+        appUserRepository.save(AppUser.builder().username("test_username").password(encoder.encode("test_password")).build());
+        LoginDataDto loginData = new LoginDataDto("test_username", "test_password");
+        ResponseEntity<String> tokenResponse = restTemplate.postForEntity("http://localhost:" + port + "/auth/login", loginData, String.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(tokenResponse.getBody());
+        return headers;
     }
 }

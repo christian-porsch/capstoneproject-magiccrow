@@ -46,13 +46,13 @@ public class CardPileService {
 
     public MagicCardInPile addMagicCardToPile(String username, MagicCardDto magicCardToAdd) {
 
+        Optional<AppUser> appUser = appUserRepository.findById(username);
+
         Optional<MagicCard> magicCard = cardSearchService.findMagicCardById(magicCardToAdd.getId());
 
         if (magicCard.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The magic card you are looking for does not exist");
         }
-
-        Optional<AppUser> appUser = appUserRepository.findById(username);
 
         if (appUser.get().getPileOfCards() == null) {
             appUser.get().setPileOfCards(new ArrayList<>());
@@ -66,7 +66,8 @@ public class CardPileService {
             appUserRepository.save(appUser.get());
 
             return magicCardInPile.get();
-        } else {
+        }
+        else {
             MagicCardInPile newMagicCardInPile = MagicCardInPile.builder()
                     .id(magicCard.get().getId())
                     .amount(1)
