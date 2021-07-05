@@ -1,5 +1,6 @@
 package de.christianporsch.backend.security.service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,5 +25,9 @@ public class JwtUtilsService {
                 .setExpiration(Date.from(Instant.now().plus(Duration.ofHours(1))))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
+    }
+
+    public Claims parseClaims(String token){
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
     }
 }
