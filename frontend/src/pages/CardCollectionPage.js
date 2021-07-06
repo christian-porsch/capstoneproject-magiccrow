@@ -1,14 +1,20 @@
 import useCardsInUserPile from "../hooks/useCardsInUserPile";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Table} from "react-bootstrap";
+import {useContext} from "react";
+import AuthContext from "../context/AuthContext";
+import {Link} from "react-router-dom";
+
 
 
 export default function CardCollectionPage() {
 
     const {cardsInPile} = useCardsInUserPile();
 
+    const {token} = useContext(AuthContext);
+
     return (
-        <div>
+        token ? <div>
             <h2 className='text-center text-uppercase text-monospace'>your collection</h2>
             {cardsInPile && <Table striped bordered hover>
                 <thead className='text-center'>
@@ -29,12 +35,12 @@ export default function CardCollectionPage() {
                     <tbody key={cardInPile.id}>
                     <tr>
                         <td>
-                            <a href={'/myCollection/' + cardInPile.id}
-                               className='badge badge-light'>{cardInPile.name}</a>
+                            <Link to={'/myCollection/' + cardInPile.id}
+                               className='badge badge-light'>{cardInPile.name}</Link>
                         </td>
                         <td>
-                            <a href={'/myCollection/' + cardInPile.id}
-                               className='badge badge-light'>{cardInPile.set_name}</a>
+                            <Link to={'/myCollection/' + cardInPile.id}
+                               className='badge badge-light'>{cardInPile.set_name}</Link>
                         </td>
                         <td className='text-center'>
                             {cardInPile.amount}
@@ -42,7 +48,7 @@ export default function CardCollectionPage() {
                     </tr>
                     </tbody>))}
             </Table>}
-        </div>
+        </div> : <></>
     )
 }
 

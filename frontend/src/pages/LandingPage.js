@@ -1,11 +1,15 @@
 import styled from 'styled-components/macro'
+import {useContext} from "react";
+import AuthContext from "../context/AuthContext";
 
 
 export default function LandingPage(){
 
+    const {jwtDecoded} = useContext(AuthContext)
+
     return(
         <Wrapper>
-            <h2>Welcome to MagicCrow</h2>
+            <h2>Hello {jwtDecoded.sub}, welcome to MagicCrow</h2>
         </Wrapper>
     )
 }
