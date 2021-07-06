@@ -1,25 +1,25 @@
-import styled from 'styled-components/macro'
 import {useContext} from "react";
 import AuthContext from "../context/AuthContext";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import useRandomCard from "../hooks/useRandomCard";
 
 
 export default function LandingPage(){
 
     const {jwtDecoded} = useContext(AuthContext)
 
+    const {randomCard} = useRandomCard();
+
+    console.log(randomCard)
+
     return(
-        <Wrapper>
-            <h2>Hello {jwtDecoded.sub}, welcome to MagicCrow</h2>
-        </Wrapper>
+        <div>
+            <h4 className='text-center text-uppercase text-monospace'>Hello {jwtDecoded.sub}, welcome to MagicCrow</h4>
+            {randomCard && <div className='position-relative'>
+            <div className=' position-absolute top-50 start-50 translate-middle'>
+                {randomCard.flavor_text}
+            </div>
+            </div>}
+        </div>
     )
 }
-
-const Wrapper = styled.div`
-  
-  text-align: center;
-  
-  h2 {
-        color: #0275d8;
-     }
-  
-`

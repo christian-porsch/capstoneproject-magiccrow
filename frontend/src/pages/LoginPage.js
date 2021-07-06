@@ -1,5 +1,8 @@
 import {useContext, useState} from "react";
 import AuthContext from "../context/AuthContext";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Key, PersonSquare} from "react-bootstrap-icons";
+
 
 const initialState = {
     username: '',
@@ -23,24 +26,37 @@ export default function LoginPage(){
     }
 
     return(
+
+        <div className='position-absolute translate-middle'>
         <form onSubmit={handleSubmit}>
-            <label>
+            <div className='col-auto input-group'>
+                <div className='input-group-text'>
+                    <PersonSquare/>
+                </div>
                 <input
+                    className='form-control'
                     type={'text'}
                     placeholder='username'
                     name='username'
                     onChange={handleChange}
                     value={credentials.username}/>
-            </label>
-            <label>
+            </div>
+            <div className='col-auto input-group'>
+                <div className='input-group-text'><Key/></div>
                 <input
+                    className='form-control'
                     type={'password'}
                     placeholder='password'
                     name='password'
                     onChange={handleChange}
                     value={credentials.password}/>
-            </label>
-            <button>Login</button>
+            </div>
+            <div className='d-flex justify-content-center'>
+                <button className='btn btn-primary'>Login</button>
+
+            </div>
         </form>
+</div>
+
     )
 }
