@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export default function useCardsInPile(){
+export default function useCardsInUserPile() {
 
     const [cardsInPile, setCardsInPile] = useState();
 

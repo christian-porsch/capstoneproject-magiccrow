@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export default function useCardPrice(id){
+export default function useCardPrice(id) {
 
     const [cardPrice, setCardPrice] = useState({});
 

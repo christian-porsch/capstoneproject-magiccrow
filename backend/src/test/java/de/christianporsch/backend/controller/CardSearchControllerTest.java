@@ -48,4 +48,28 @@ class CardSearchControllerTest {
         assertThat(response.getBody(),arrayContainingInAnyOrder(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15))));
     }
 
+    @Test
+    @DisplayName("Method should return magic cards from Db by Id")
+    public void findMagicCardByIdTest(){
+
+        // Given
+
+        magicCardRepository.save(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15)));
+
+        // When
+
+        ResponseEntity<MagicCard> response = restTemplate.getForEntity("http://localhost:" + port + "/api/cards/1", MagicCard.class);
+
+        // Then
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), is(new MagicCard().builder()
+                .id("1")
+                .name("Tarmogoyf")
+                .oracle_text("some oracle text about tarmo")
+                .image_uris(new CardImage("tarmoHighresImg"))
+                .set_name("some set")
+                .prices(new Price(10, 20, 15))
+                .build()));
+    }
 }

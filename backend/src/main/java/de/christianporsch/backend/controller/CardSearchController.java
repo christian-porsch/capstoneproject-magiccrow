@@ -22,12 +22,12 @@ public class CardSearchController {
 
 
     @GetMapping
-    List<MagicCard> findMagicCards(@RequestParam String cardName){
+    List<MagicCard> findMagicCards(@RequestParam String cardName) {
         return cardSearchService.findMagicCards(cardName);
     }
 
     @GetMapping("{id}")
-    public MagicCard findMagicCardById (@PathVariable String id){
+    public MagicCard findMagicCardById(@PathVariable String id) {
         Optional<MagicCard> response = cardSearchService.findMagicCardById(id);
         if (response.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Magic card with id " + id + " not found");

@@ -1,12 +1,12 @@
 import styled from "styled-components/macro";
 
-export default function CardImage({singleCard}){
+export default function CardImage({singleCard}) {
 
     return (
 
-            <ImageAppearance key={singleCard.id} src={singleCard.image_uris?.normal} alt={singleCard.name} />
-        )
-    }
+        <ImageAppearance key={singleCard.id} src={singleCard.image_uris?.normal} alt={singleCard.name} />
+    )
+}
 
     const ImageAppearance = styled.img`
     
@@ -15,5 +15,5 @@ export default function CardImage({singleCard}){
         width: 150px;
         height: auto;
         border-radius: 7%;
-    
+       
     `

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 
-export default function useCardSearch(){
+export default function useCardSearch() {
 
     const [cards, setCards] = useState([]);
 
@@ -9,7 +9,7 @@ export default function useCardSearch(){
         return axios
             .get('/api/cards?cardName=' + cardName)
             .then((response) => response.data)
-            .then (setCards)
+            .then(setCards)
             .catch((error) => console.log(error))
 
     }
