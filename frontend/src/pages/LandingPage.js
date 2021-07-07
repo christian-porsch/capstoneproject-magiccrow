@@ -13,13 +13,15 @@ export default function LandingPage(){
     console.log(randomCard)
 
     return(
-        <div>
-            <h4 className='text-center text-uppercase text-monospace'>Hello {jwtDecoded.sub}, welcome to MagicCrow</h4>
-            {randomCard && <div className='position-relative'>
-            <div className=' position-absolute top-50 start-50 translate-middle'>
-                {randomCard.flavor_text}
+        <div className='container text-center h-100'>
+            <h4 className='text-uppercase text-monospace p-5'>Hello {jwtDecoded.sub}, welcome to MagicCrow</h4>
+            <div className='font-italic p-5'>
+                {randomCard &&
+                <div>
+                    {randomCard.flavor_text}
+                </div>}
             </div>
-            </div>}
+
         </div>
     )
 }

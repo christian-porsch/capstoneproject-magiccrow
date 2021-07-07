@@ -32,12 +32,12 @@ export default function SingleCardInCollectionPage() {
 
     return (
         <div className='container pb-5'>
-            <div className='row'>
+            <div className='row p-1'>
                 <div className='col'>
                     <SingleCardImage src={cardInPile.image_uris?.normal}/>
                     <div className='col d-flex justify-content-between p-2'>
                         <button className='btn btn-danger' onClick={handleOnClickDecrease}>-</button>
-                        <BoxSeam size='25px'/>: {cardInPile.amount}
+                        <BoxSeam size='30px'/>: {cardInPile.amount}
                         <button className='btn btn-success' onClick={handleOnClickAdd}>+</button>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ export default function SingleCardInCollectionPage() {
                 </div>
                 <p className='card-text'>{cardInPile.oracle_text}</p>
             </div>
-            <div className='d-flex justify-content-center'>
+            <div className='d-flex justify-content-center p-2'>
                 <button className='btn btn-danger' onClick={handleOnClickDelete}>delete from collection</button>
             </div>
         </div>

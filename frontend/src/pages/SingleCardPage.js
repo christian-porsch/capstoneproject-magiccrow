@@ -19,7 +19,7 @@ export default function SingleCardPage() {
 
     return (
         <div className='container'>
-            <div className='row'>
+            <div className='row p-1'>
                 <div className='col'>
                     <SingleCardImage src={card.image_uris?.normal}/>
                 </div>
@@ -33,13 +33,13 @@ export default function SingleCardPage() {
                     <div className='w-100 badge badge-info'>
                         {cardPrice.prices?.tix} tix
                     </div>
-                    <button className='btn btn-success w-100 p-2' onClick={handleOnClick}>Add to collection</button>
+                    <button className='p-1 w-100 btn btn-success' onClick={handleOnClick}>Add to collection</button>
                     <div className='col d-flex justify-content-center p-2'>
                         <BoxSeam size='25px'/>: {cardInPile.amount}
                     </div>
                 </div>
             </div>
-            <div className='card border-light'>
+            <div className='card border-light p-3'>
                 <div className='card-header'>
 
                 </div>
