@@ -76,5 +76,6 @@ const SingleCardImage = styled.img`
         width: 200px;
         height: auto;
         border-radius: 7%;
+        box-shadow: 0px 10px 13px -7px #000000;
     
     `

@@ -8,18 +8,15 @@ export default function useCardsInUserPile() {
 
     const {token, jwtDecoded} = useContext(AuthContext)
 
-    console.log(jwtDecoded)
-
-    const header = () => (
-        {headers: {
+    const config = {
+        headers: {
             Authorization: `Bearer ${token}`,
-            },
-        }
-    )
+        },
+    }
 
     useEffect(() => {
         axios
-            .get('/api/cardsInPile/' + jwtDecoded.sub, header())
+            .get('/api/cardsInPile/' + jwtDecoded.sub, config)
             .then(response => response.data)
             .then(setCardsInPile)
     }, [])

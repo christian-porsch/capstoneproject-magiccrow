@@ -8,16 +8,16 @@ export default function useCardId(id) {
 
     const {token} = useContext(AuthContext)
 
-    const header = () => (
-        {headers: {
+    const config = {
+        headers: {
                 Authorization: `Bearer ${token}`,
             },
         }
-    )
+
 
     useEffect(() => {
         axios
-            .get('/api/cards/' + id, header())
+            .get('/api/cards/' + id, config)
             .then(response => response.data)
             .then(setCard)
     }, [id])

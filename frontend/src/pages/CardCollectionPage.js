@@ -3,8 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useContext} from "react";
 import AuthContext from "../context/AuthContext";
 import {Link} from "react-router-dom";
-import styled from "styled-components/macro";
-
 
 
 export default function CardCollectionPage() {

@@ -33,10 +33,10 @@ export default function SingleCardPage() {
                     <div className='w-100 badge badge-info'>
                         {cardPrice.prices?.tix} tix
                     </div>
-                    <button className='p-1 w-100 btn btn-success' onClick={handleOnClick}>Add to collection</button>
                     <div className='col d-flex justify-content-center p-2'>
                         <BoxSeam size='25px'/>: {cardInPile.amount}
                     </div>
+                    <button className='p-1 w-100 btn btn-success' onClick={handleOnClick}>Add to collection</button>
                 </div>
             </div>
             <div className='card border-light p-3'>
@@ -62,6 +62,7 @@ const SingleCardImage = styled.img`
         width: 200px;
         height: auto;
         border-radius: 7%;
+        box-shadow: 0px 10px 13px -7px #000000;
     
     `
 
