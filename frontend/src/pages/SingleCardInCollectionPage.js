@@ -2,7 +2,7 @@ import {useParams, useHistory} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import styled from "styled-components/macro";
-import {BoxSeam, DashSquare, DashSquareFill, PlusSquareFill} from "react-bootstrap-icons";
+import {BoxSeam, DashSquareFill, PlusSquareFill} from "react-bootstrap-icons";
 import useCardPrice from "../hooks/useCardPrice";
 import useCardInPile from "../hooks/useCardInPile";
 
