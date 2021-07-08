@@ -10,8 +10,6 @@ export default function MagicCrowFooter() {
 
     const {token} = useContext(AuthContext);
 
-    console.log(token)
-
     return (
         token ? <Navbar fixed='bottom' bg='dark' className='justify-content-around'>
             <NavItem>

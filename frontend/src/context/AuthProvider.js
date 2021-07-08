@@ -12,6 +12,12 @@ export default function AuthProvider({children}){
 
     const [jwtDecoded, setJwtDecoded] = useState();
 
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+
     const login = credentials => {
         axios
             .post('/auth/login', credentials)
@@ -25,7 +31,7 @@ export default function AuthProvider({children}){
     }
 
     return(
-        <AuthContext.Provider value={{token, login, jwtDecoded}}>
+        <AuthContext.Provider value={{token, config, login, jwtDecoded}}>
             {children}
         </AuthContext.Provider>
     )

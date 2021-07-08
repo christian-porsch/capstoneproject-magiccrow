@@ -49,7 +49,7 @@ export default function SingleCardPage() {
                     </h3>
                     <h6 className='text-monospace'>{card.set_name}</h6>
                 </div>
-                <p className='card-text'>{card.oracle_text}</p>
+                <p className='card-text text-center'>{card.oracle_text}</p>
             </div>
         </div>
 

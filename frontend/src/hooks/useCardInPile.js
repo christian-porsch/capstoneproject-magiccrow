@@ -6,13 +6,7 @@ export default function useCardInPile(id) {
 
     const [cardInPile, setCardInPile] = useState({})
 
-    const {token} = useContext(AuthContext)
-
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    }
+    const {token, config} = useContext(AuthContext)
 
     useEffect(() => {
         axios
@@ -20,7 +14,7 @@ export default function useCardInPile(id) {
             .then(response => response.data)
             .then(setCardInPile)
             .catch(error => console.log(error))
-    }, [id])
+    }, [id, token, config])
 
     const addCardToPile = (id) => {
         axios
@@ -39,7 +33,7 @@ export default function useCardInPile(id) {
     }
 
     const deleteCardFromPile = (id) => {
-        axios
+        return axios
             .delete('/api/cardsInPile/' + id, config)
             .then(response => response.data)
             .then(setCardInPile)
