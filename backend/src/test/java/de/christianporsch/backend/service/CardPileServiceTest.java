@@ -17,7 +17,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
-
 class CardPileServiceTest {
 
     private final MagicCardRepository magicCardRepository = mock(MagicCardRepository.class);

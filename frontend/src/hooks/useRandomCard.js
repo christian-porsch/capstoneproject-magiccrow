@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export default function useRandomCard(){
+export default function useRandomCard() {
 
     const [randomCard, setRandomCard] = useState()
 
@@ -12,7 +12,7 @@ export default function useRandomCard(){
             .then(setRandomCard)
     }, [])
 
-    return{
+    return {
         randomCard
     }
 }

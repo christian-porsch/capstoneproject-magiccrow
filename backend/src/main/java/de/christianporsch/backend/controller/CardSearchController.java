@@ -20,7 +20,6 @@ public class CardSearchController {
         this.cardSearchService = cardSearchService;
     }
 
-
     @GetMapping
     List<MagicCard> findMagicCards(@RequestParam String cardName) {
         return cardSearchService.findMagicCards(cardName);
@@ -34,5 +33,4 @@ public class CardSearchController {
         }
         return response.get();
     }
-
 }

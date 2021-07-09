@@ -20,7 +20,6 @@ import org.springframework.test.context.TestPropertySource;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = "jwt.secret=testSecret")
 class CardSearchControllerTest {
@@ -46,30 +45,30 @@ class CardSearchControllerTest {
 
         // Given
 
-        magicCardRepository.save(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15)));
-        magicCardRepository.save(new MagicCard("2","Jace, the Mindsculptor", "some oracle text about jace", new CardImage("jaceHighresImg"), "some set", new Price(1, 2, 5)));
+        magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15)));
+        magicCardRepository.save(new MagicCard("2", "Jace, the Mindsculptor", "some oracle text about jace", new CardImage("jaceHighresImg"), "some set", new Price(1, 2, 5)));
 
         // When
 
         HttpHeaders headers = getHttpHeaderWithAuthToken();
         ResponseEntity<MagicCard[]> response = restTemplate.exchange("http://localhost:" + port + "/api/cards?cardName=Tarmogoyf",
                 HttpMethod.GET,
-                        new HttpEntity<>(headers),
-                        MagicCard[].class);
+                new HttpEntity<>(headers),
+                MagicCard[].class);
 
         // Then
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        assertThat(response.getBody(),arrayContainingInAnyOrder(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15))));
+        assertThat(response.getBody(), arrayContainingInAnyOrder(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15))));
     }
 
     @Test
     @DisplayName("Method should return magic cards from Db by Id")
-    public void findMagicCardByIdTest(){
+    public void findMagicCardByIdTest() {
 
         // Given
 
-        magicCardRepository.save(new MagicCard("1","Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15)));
+        magicCardRepository.save(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo", new CardImage("tarmoHighresImg"), "some set", new Price(10, 20, 15)));
 
         // When
 

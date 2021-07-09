@@ -27,7 +27,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = "jwt.secret=testSecret")
 class CardPileControllerTest {
@@ -51,7 +50,7 @@ class CardPileControllerTest {
     private PasswordEncoder encoder;
 
     @BeforeEach
-    public void clearRepositories(){
+    public void clearRepositories() {
         magicCardRepository.deleteAll();
         magicCardInPileRepository.deleteAll();
         appUserRepository.deleteAll();
@@ -127,7 +126,7 @@ class CardPileControllerTest {
         ResponseEntity<MagicCardInPile> response = restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile",
                 HttpMethod.POST,
                 new HttpEntity<>(magicCardToAdd, headers),
-                 MagicCardInPile.class);
+                MagicCardInPile.class);
 
         // Then
 
@@ -165,7 +164,7 @@ class CardPileControllerTest {
         ResponseEntity<MagicCardInPile> response = restTemplate.exchange("http://localhost:" + port + "/api/cardsInPile",
                 HttpMethod.POST,
                 new HttpEntity<>(magicCardToAdd, headers),
-                 MagicCardInPile.class);
+                MagicCardInPile.class);
 
         // Then
 

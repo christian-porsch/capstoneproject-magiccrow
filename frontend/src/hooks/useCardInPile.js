@@ -26,7 +26,7 @@ export default function useCardInPile(id) {
 
     const decreaseCardFromPile = (id) => {
         axios
-            .put('/api/cardsInPile/updateCardInPile/' + id,{} , config)
+            .put('/api/cardsInPile/updateCardInPile/' + id, {}, config)
             .then(response => response.data)
             .then(setCardInPile)
             .catch(error => console.log(error))

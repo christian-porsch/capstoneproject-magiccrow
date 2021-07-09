@@ -23,4 +23,5 @@ public class AppUser {
     private String password;
     @DBRef
     private List<MagicCardInPile> pileOfCards;
+
 }

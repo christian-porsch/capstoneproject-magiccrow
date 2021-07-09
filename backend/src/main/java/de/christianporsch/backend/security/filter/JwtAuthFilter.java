@@ -32,13 +32,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String token = getAuthToken(request);
 
-        if(token != null && !token.isBlank()) {
-           try {
-               Claims claims = this.jwtUtilsService.parseClaims(token);
-               setSecurityContext(claims.getSubject());
-           }catch (Exception e){
-               throw new ResponseStatusException(HttpStatus.FORBIDDEN, "invalid token");
-           }
+        if (token != null && !token.isBlank()) {
+            try {
+                Claims claims = this.jwtUtilsService.parseClaims(token);
+                setSecurityContext(claims.getSubject());
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "invalid token");
+            }
         }
         filterChain.doFilter(request, response);
     }

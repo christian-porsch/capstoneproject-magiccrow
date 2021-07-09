@@ -3,7 +3,7 @@ import {Button, Form, FormControl, InputGroup} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-export default function CardSearch({searchForCard}){
+export default function CardSearch({searchForCard}) {
 
     const [cardName, setCardName] = useState('');
 
@@ -12,15 +12,15 @@ export default function CardSearch({searchForCard}){
         searchForCard(cardName);
     }
 
-    return(
+    return (
 
-            <Form onSubmit = {handleSubmit} className='form-control-sm'>
-                <InputGroup className='rounded'>
+        <Form onSubmit={handleSubmit} className='form-control-sm'>
+            <InputGroup className='rounded'>
                 <FormControl
-                    type ='text'
-                    placeholder ='search for a card'
-                    value ={cardName}
-                    onChange = {event => setCardName(event.target.value)}
+                    type='text'
+                    placeholder='search for a card'
+                    value={cardName}
+                    onChange={event => setCardName(event.target.value)}
                 />
                 <InputGroup.Append>
                     <Button variant='primary' disabled={cardName.length === 0}>
@@ -29,7 +29,7 @@ export default function CardSearch({searchForCard}){
                 </InputGroup.Append>
             </InputGroup>
 
-            </Form>
+        </Form>
 
     )
 }

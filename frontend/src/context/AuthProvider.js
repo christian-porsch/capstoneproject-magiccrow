@@ -4,7 +4,7 @@ import axios from "axios";
 import {useHistory} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
-export default function AuthProvider({children}){
+export default function AuthProvider({children}) {
 
     const history = useHistory();
 
@@ -30,7 +30,7 @@ export default function AuthProvider({children}){
             .catch(error => console.error(error.message))
     }
 
-    return(
+    return (
         <AuthContext.Provider value={{token, config, login, jwtDecoded}}>
             {children}
         </AuthContext.Provider>
