@@ -1,17 +1,21 @@
 import useCardsInUserPile from "../hooks/useCardsInUserPile";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Table} from "react-bootstrap";
+import {useContext} from "react";
+import AuthContext from "../context/AuthContext";
+import {Link} from "react-router-dom";
 
 
 export default function CardCollectionPage() {
 
     const {cardsInPile} = useCardsInUserPile();
 
+    const {token} = useContext(AuthContext);
+
     return (
-        <div>
-            <h2 className='text-center text-uppercase text-monospace'>your collection</h2>
-            {cardsInPile && <Table striped bordered hover>
-                <thead className='text-center'>
+        token ? <div className='pb-5'>
+            <h2 className='text-center text-uppercase text-monospace p-2'>your collection</h2>
+            {cardsInPile && <table className='table text-center table-bordered'>
+                <thead className='thead-light'>
                 <tr>
                     <th>
                         cardname
@@ -27,22 +31,22 @@ export default function CardCollectionPage() {
 
                 {cardsInPile.map(cardInPile => (
                     <tbody key={cardInPile.id}>
-                    <tr>
+                    <tr className='text-monospace'>
                         <td>
-                            <a href={'/myCollection/' + cardInPile.id}
-                               className='badge badge-light'>{cardInPile.name}</a>
+                            <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={'/myCollection/' + cardInPile.id}>
+                            {cardInPile.name}</Link>
                         </td>
                         <td>
-                            <a href={'/myCollection/' + cardInPile.id}
-                               className='badge badge-light'>{cardInPile.set_name}</a>
+                            <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={'/myCollection/' + cardInPile.id}>
+                                {cardInPile.set_name}</Link>
                         </td>
-                        <td className='text-center'>
-                            {cardInPile.amount}
+                        <td>
+                            <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={'/myCollection/' + cardInPile.id}>
+                                {cardInPile.amount}</Link>
                         </td>
                     </tr>
                     </tbody>))}
-            </Table>}
-        </div>
+            </table>}
+        </div> : <></>
     )
 }
-

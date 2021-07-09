@@ -2,7 +2,7 @@ import {useParams, useHistory} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import styled from "styled-components/macro";
-import {BoxSeam} from "react-bootstrap-icons";
+import {BoxSeam, DashSquareFill, PlusSquareFill} from "react-bootstrap-icons";
 import useCardPrice from "../hooks/useCardPrice";
 import useCardInPile from "../hooks/useCardInPile";
 
@@ -26,19 +26,20 @@ export default function SingleCardInCollectionPage() {
     }
 
     const handleOnClickDelete = () => {
-        deleteCardFromPile(id);
-        history.push('/myCollection')
+        deleteCardFromPile(id)
+            .then(() =>history.push('/myCollection'));
+
     }
 
     return (
         <div className='container pb-5'>
-            <div className='row'>
+            <div className='row p-1'>
                 <div className='col'>
                     <SingleCardImage src={cardInPile.image_uris?.normal}/>
                     <div className='col d-flex justify-content-between p-2'>
-                        <button className='btn btn-danger' onClick={handleOnClickDecrease}>-</button>
-                        <BoxSeam size='25px'/>: {cardInPile.amount}
-                        <button className='btn btn-success' onClick={handleOnClickAdd}>+</button>
+                        <DashSquareFill size='35px' onClick={handleOnClickDecrease} style={{color: '#d9534f'}}></DashSquareFill>
+                        <BoxSeam size='30px'/>: {cardInPile.amount}
+                        <PlusSquareFill size='35px' onClick={handleOnClickAdd} style={{color: '#5cb85c'}}>+</PlusSquareFill>
                     </div>
                 </div>
                 <div className='col'>
@@ -62,9 +63,9 @@ export default function SingleCardInCollectionPage() {
                     </h3>
                     <h6 className='text-monospace'>{cardInPile.set_name}</h6>
                 </div>
-                <p className='card-text'>{cardInPile.oracle_text}</p>
+                <p className='card-text text-center'>{cardInPile.oracle_text}</p>
             </div>
-            <div className='d-flex justify-content-center'>
+            <div className='d-flex justify-content-center p-2'>
                 <button className='btn btn-danger' onClick={handleOnClickDelete}>delete from collection</button>
             </div>
         </div>
@@ -76,5 +77,6 @@ const SingleCardImage = styled.img`
         width: 200px;
         height: auto;
         border-radius: 7%;
+        box-shadow: 0px 10px 13px -7px #000000;
     
     `

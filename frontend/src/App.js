@@ -6,6 +6,9 @@ import SingleCardPage from "./pages/SingleCardPage";
 import MagicCrowHeader from "./components/MagicCrowHeader";
 import MagicCrowFooter from "./components/MagicCrowFooter";
 import SingleCardInCollectionPage from "./pages/SingleCardInCollectionPage";
+import LoginPage from "./pages/LoginPage";
+import AuthProvider from "./context/AuthProvider";
+import PrivateRoute from "./routing/PrivateRoute";
 
 function App() {
 
@@ -13,28 +16,33 @@ function App() {
     return (
 
         <Router>
-            <MagicCrowHeader/>
-            <Switch>
-                <Route path={'/'} exact>
-                    <LandingPage/>
-                </Route>
-                <Route path={'/searchCards'} exact>
-                    <CardSearchPage/>
-                </Route>
-                <Route path={'/myCollection'} exact>
-                    <CardCollectionPage/>
-                </Route>
-                <Route path={'/:id'} exact>
-                    <SingleCardPage/>
-                </Route>
-                <Route path={'/myCollection/:id'} exact>
-                    <SingleCardInCollectionPage/>
-                </Route>
-            </Switch>
-            <MagicCrowFooter/>
+            <AuthProvider>
+                <MagicCrowHeader/>
+                <Switch>
+                    <Route path={'/'} exact>
+                        <LoginPage/>
+                    </Route>
+                    <PrivateRoute path={'/home'} exact>
+                        <LandingPage/>
+                    </PrivateRoute>
+                    <PrivateRoute path={'/searchCards'} exact>
+                        <CardSearchPage/>
+                    </PrivateRoute>
+                    <PrivateRoute path={'/myCollection'} exact>
+                        <CardCollectionPage/>
+                    </PrivateRoute>
+                    <PrivateRoute path={'/:id'} exact>
+                        <SingleCardPage/>
+                    </PrivateRoute>
+                    <PrivateRoute path={'/myCollection/:id'} exact>
+                        <SingleCardInCollectionPage/>
+                    </PrivateRoute>
+                </Switch>
+                <MagicCrowFooter/>
+            </AuthProvider>
         </Router>
 
-    );
+    )
 }
 
 export default App;

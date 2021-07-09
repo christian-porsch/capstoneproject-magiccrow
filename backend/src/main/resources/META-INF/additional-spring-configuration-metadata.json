@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "server.security.user.password",
+      "type": "java.lang.String",
+      "description": "Description for server.security.user.password."
+  }
+] }

@@ -4,7 +4,8 @@ import de.christianporsch.backend.model.*;
 import de.christianporsch.backend.model.dto.MagicCardDto;
 import de.christianporsch.backend.repository.MagicCardInPileRepository;
 import de.christianporsch.backend.repository.MagicCardRepository;
-import de.christianporsch.backend.repository.UserRepository;
+import de.christianporsch.backend.security.repository.AppUserRepository;
+import de.christianporsch.backend.security.model.AppUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +22,9 @@ class CardPileServiceTest {
 
     private final MagicCardRepository magicCardRepository = mock(MagicCardRepository.class);
     private final MagicCardInPileRepository magicCardInPileRepository = mock(MagicCardInPileRepository.class);
-    private final UserRepository userRepository = mock(UserRepository.class);
+    private final AppUserRepository appUserRepository = mock(AppUserRepository.class);
     private final CardSearchService cardSearchService = new CardSearchService(magicCardRepository);
-    private final CardPileService cardPileService = new CardPileService(cardSearchService, userRepository, magicCardInPileRepository);
+    private final CardPileService cardPileService = new CardPileService(cardSearchService, appUserRepository, magicCardInPileRepository);
 
     @Test
     @DisplayName("Method should return pile of cards from a user found by user id")
@@ -31,14 +32,14 @@ class CardPileServiceTest {
 
         // Given
 
-        User user = new User("17", "christian", List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 1, false)));
-        when(userRepository.findUserById("17")).thenReturn(user);
+        when(appUserRepository.findById("christian")).thenReturn(Optional.of(appUser));
 
         // When
 
-        List<MagicCardInPile> pileOfUserToFind = cardPileService.findPileOfCardsByUser("17");
+        List<MagicCardInPile> pileOfUserToFind = cardPileService.findPileOfCardsByUser(appUser.getUsername());
 
         // Then
 
@@ -89,19 +90,19 @@ class CardPileServiceTest {
 
         // Given
 
-        User user = new User("17", "christian", new ArrayList<>(List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", new ArrayList<>(List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 1, false))));
 
         MagicCardDto newMagicCardToAdd = new MagicCardDto("2");
 
-        when(userRepository.findUserById("60d2f120c76f8707f38e9a99")).thenReturn(user);
+        when(appUserRepository.findById(appUser.getUsername())).thenReturn(Optional.of(appUser));
         when(magicCardRepository.findMagicCardById("2")).thenReturn(Optional.of(new MagicCard("2", "Mox", "some oracle text about mox",
                 new CardImage("moxHighresImg"), "some set", new Price(10, 20, 15))));
 
         // When
 
-        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(newMagicCardToAdd);
+        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(appUser.getUsername(), newMagicCardToAdd);
 
         // Then
 
@@ -115,19 +116,19 @@ class CardPileServiceTest {
 
         // Given
 
-        User user = new User("17", "christian", new ArrayList<>(List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", new ArrayList<>(List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 1, false))));
 
         MagicCardDto newMagicCardToAdd = new MagicCardDto("1");
 
-        when(userRepository.findUserById("60d2f120c76f8707f38e9a99")).thenReturn(user);
+        when(appUserRepository.findById(appUser.getUsername())).thenReturn(Optional.of(appUser));
         when(magicCardRepository.findMagicCardById("1")).thenReturn(Optional.of(new MagicCard("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", new Price(100, 25, 17))));
 
         // When
 
-        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(newMagicCardToAdd);
+        MagicCardInPile magicCardInPileToAdd = cardPileService.addMagicCardToPile(appUser.getUsername(), newMagicCardToAdd);
 
         // Then
 
@@ -142,16 +143,16 @@ class CardPileServiceTest {
 
         // Given
 
-        User user = new User("17", "christian", List.of(
+        AppUser appUser = new AppUser("christian", "supersafe", List.of(
                 new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                         new CardImage("tarmoHighresImg"), "some set", 10, false)));
-        when(userRepository.findUserById("60d2f120c76f8707f38e9a99")).thenReturn(user);
+        when(appUserRepository.findById(appUser.getUsername())).thenReturn(Optional.of(appUser));
         when(magicCardInPileRepository.findMagicCardInPileById("1")).thenReturn(Optional.of(new MagicCardInPile("1", "Tarmogoyf", "some oracle text about tarmo",
                 new CardImage("tarmoHighresImg"), "some set", 10, false)));
 
         // When
 
-        MagicCardInPile magicCardInPileToDecrease = cardPileService.decreaseMagicCardInPileAmount("1");
+        MagicCardInPile magicCardInPileToDecrease = cardPileService.decreaseMagicCardInPileAmount(appUser.getUsername(), "1");
 
         // Then
 
