@@ -16,4 +16,5 @@ public interface MagicCardRepository extends PagingAndSortingRepository<MagicCar
     List<MagicCard> filterCardsByCardName(String cardName);
 
     Optional<MagicCard> findMagicCardById(String id);
+
 }

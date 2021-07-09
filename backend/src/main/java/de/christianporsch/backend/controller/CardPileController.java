@@ -62,6 +62,4 @@ public class CardPileController {
     public void deleteMagicCardInPileById(@PathVariable String id) {
         cardPileService.deleteMagicCardInPileById(id);
     }
-
-
 }

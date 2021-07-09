@@ -27,7 +27,7 @@ public class JwtUtilsService {
                 .compact();
     }
 
-    public Claims parseClaims(String token){
+    public Claims parseClaims(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
     }
 }

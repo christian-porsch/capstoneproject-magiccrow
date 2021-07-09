@@ -4,17 +4,17 @@ import CardSearchResult from "../components/CardSearchResult";
 import CardSearch from "../components/CardSearch";
 
 
-export default function CardSearchPage(){
+export default function CardSearchPage() {
 
     const {cards, getSpecificCard} = useCardSearch();
 
 
-    return(
-            <Wrapper>
-                <CardSearch searchForCard={getSpecificCard}/>
-                <CardSearchResult cards={cards}/>
-            </Wrapper>
-        )
+    return (
+        <Wrapper>
+            <CardSearch searchForCard={getSpecificCard}/>
+            <CardSearchResult cards={cards}/>
+        </Wrapper>
+    )
 }
 
 const Wrapper = styled.div`

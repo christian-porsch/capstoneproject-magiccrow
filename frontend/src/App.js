@@ -14,7 +14,6 @@ function App() {
 
 
     return (
-
         <Router>
             <AuthProvider>
                 <MagicCrowHeader/>
@@ -41,7 +40,6 @@ function App() {
                 <MagicCrowFooter/>
             </AuthProvider>
         </Router>
-
     )
 }
 

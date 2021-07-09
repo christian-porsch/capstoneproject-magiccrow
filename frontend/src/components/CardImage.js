@@ -4,11 +4,11 @@ export default function CardImage({singleCard}) {
 
     return (
 
-        <ImageAppearance key={singleCard.id} src={singleCard.image_uris?.normal} alt={singleCard.name} />
+        <ImageAppearance key={singleCard.id} src={singleCard.image_uris?.normal} alt={singleCard.name}/>
     )
 }
 
-    const ImageAppearance = styled.img`
+const ImageAppearance = styled.img`
     
         justify-content: space-evenly;
         margin: 5px;

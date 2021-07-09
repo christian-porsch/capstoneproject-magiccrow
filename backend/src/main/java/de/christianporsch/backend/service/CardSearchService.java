@@ -18,14 +18,11 @@ public class CardSearchService {
         this.magicCardRepository = magicCardRepository;
     }
 
-    public List<MagicCard> findMagicCards(String cardName){
+    public List<MagicCard> findMagicCards(String cardName) {
         return magicCardRepository.filterCardsByCardName(cardName);
-
     }
 
-    public Optional<MagicCard> findMagicCardById (String id){
+    public Optional<MagicCard> findMagicCardById(String id) {
         return magicCardRepository.findMagicCardById(id);
     }
-
-
 }

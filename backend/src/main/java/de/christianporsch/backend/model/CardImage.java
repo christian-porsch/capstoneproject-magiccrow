@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class CardImage {
 
     private String normal;
-
 }

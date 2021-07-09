@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 @Service
 public class CardPileService {
 
@@ -66,8 +65,7 @@ public class CardPileService {
             appUserRepository.save(appUser.get());
 
             return magicCardInPile.get();
-        }
-        else {
+        } else {
             MagicCardInPile newMagicCardInPile = MagicCardInPile.builder()
                     .id(magicCard.get().getId())
                     .amount(1)
@@ -82,7 +80,6 @@ public class CardPileService {
 
             return newMagicCardInPile;
         }
-
     }
 
     public MagicCardInPile decreaseMagicCardInPileAmount(String username, String id) {
@@ -104,7 +101,6 @@ public class CardPileService {
         }
         throw new IllegalArgumentException();
     }
-
     public void deleteMagicCardInPileById(String id) {
         magicCardInPileRepository.deleteById(id);
     }

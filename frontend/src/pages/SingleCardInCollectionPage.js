@@ -27,7 +27,7 @@ export default function SingleCardInCollectionPage() {
 
     const handleOnClickDelete = () => {
         deleteCardFromPile(id)
-            .then(() =>history.push('/myCollection'));
+            .then(() => history.push('/myCollection'));
 
     }
 
@@ -37,21 +37,23 @@ export default function SingleCardInCollectionPage() {
                 <div className='col'>
                     <SingleCardImage src={cardInPile.image_uris?.normal}/>
                     <div className='col d-flex justify-content-between p-2'>
-                        <DashSquareFill size='35px' onClick={handleOnClickDecrease} style={{color: '#d9534f'}}></DashSquareFill>
+                        <DashSquareFill size='35px' onClick={handleOnClickDecrease}
+                                        style={{color: '#d9534f'}}></DashSquareFill>
                         <BoxSeam size='30px'/>: {cardInPile.amount}
-                        <PlusSquareFill size='35px' onClick={handleOnClickAdd} style={{color: '#5cb85c'}}>+</PlusSquareFill>
+                        <PlusSquareFill size='35px' onClick={handleOnClickAdd}
+                                        style={{color: '#5cb85c'}}>+</PlusSquareFill>
                     </div>
                 </div>
                 <div className='col'>
-                        <div className='w-100 badge badge-info'>
-                            {cardPrice.prices?.usd} $
-                        </div>
-                        <div className='w-100 badge badge-info'>
-                            {cardPrice.prices?.eur} €
-                        </div>
-                        <div className='w-100 badge badge-info'>
-                            {cardPrice.prices?.tix} tix
-                        </div>
+                    <div className='w-100 badge badge-info'>
+                        {cardPrice.prices?.usd} $
+                    </div>
+                    <div className='w-100 badge badge-info'>
+                        {cardPrice.prices?.eur} €
+                    </div>
+                    <div className='w-100 badge badge-info'>
+                        {cardPrice.prices?.tix} tix
+                    </div>
                 </div>
             </div>
             <div className='card border-light'>

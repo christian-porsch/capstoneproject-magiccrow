@@ -33,15 +33,18 @@ export default function CardCollectionPage() {
                     <tbody key={cardInPile.id}>
                     <tr className='text-monospace'>
                         <td>
-                            <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={'/myCollection/' + cardInPile.id}>
-                            {cardInPile.name}</Link>
+                            <Link style={{color: 'inherit', textDecoration: 'inherit'}}
+                                  to={'/myCollection/' + cardInPile.id}>
+                                {cardInPile.name}</Link>
                         </td>
                         <td>
-                            <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={'/myCollection/' + cardInPile.id}>
+                            <Link style={{color: 'inherit', textDecoration: 'inherit'}}
+                                  to={'/myCollection/' + cardInPile.id}>
                                 {cardInPile.set_name}</Link>
                         </td>
                         <td>
-                            <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={'/myCollection/' + cardInPile.id}>
+                            <Link style={{color: 'inherit', textDecoration: 'inherit'}}
+                                  to={'/myCollection/' + cardInPile.id}>
                                 {cardInPile.amount}</Link>
                         </td>
                     </tr>

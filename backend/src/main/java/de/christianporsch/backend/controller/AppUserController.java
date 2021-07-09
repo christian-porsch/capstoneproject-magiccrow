@@ -12,7 +12,7 @@ import java.security.Principal;
 public class AppUserController {
 
     @GetMapping("me")
-    public UserResponseDto getLoggedInUser(Principal principal){
+    public UserResponseDto getLoggedInUser(Principal principal) {
         return new UserResponseDto(principal.getName());
     }
 
